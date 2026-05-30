@@ -6,6 +6,9 @@ license: MIT
 tags:
   - agent-security
   - openclaw
+  - codex
+  - claude
+  - agent-skills
   - skills
   - mcp-security
   - prompt-injection
@@ -27,7 +30,9 @@ safety:
 
 Agent Trust is a local pre-action trust boundary for AI agents. Use it before an agent installs an external skill/plugin/MCP server, passes sensitive authority to a tool, approves an x402-style payment decision, or lets another repository/helper influence local actions.
 
-## OpenClaw quickstart
+## Install quickstart
+
+### OpenClaw
 
 Install this repository as a root skill source:
 
@@ -37,7 +42,24 @@ openclaw skills install git:tigrohvost/agent-trust@main
 
 The repository is intentionally shaped for Git/local skill installation: this `SKILL.md` file is at the source root and `name: agent-trust` is the stable install slug / allowlist key.
 
-After installation, verify the Python package interface in the agent environment:
+### Codex CLI
+
+Codex skills are discovered from a skills directory such as `$CODEX_HOME/skills` or `~/.codex/skills`. Install Agent Trust by cloning this repository as a skill folder, then restart Codex so the `name`, `description`, and `SKILL.md` path are re-indexed:
+
+```bash
+mkdir -p "${CODEX_HOME:-$HOME/.codex}/skills"
+git clone https://github.com/tigrohvost/agent-trust.git "${CODEX_HOME:-$HOME/.codex}/skills/agent-trust"
+```
+
+If you prefer not to install globally, point Codex at this file as an instruction source for a one-off check. Keep the repository root intact so relative examples and schemas remain available.
+
+### Claude / Claude Code compatible use
+
+Claude-style agent skills also center on a `SKILL.md` file with frontmatter plus focused instructions. Use this repository as a portable skill folder, or copy the repository into your Claude skills location if your Claude environment supports local skill directories. The important invariant is the same: keep `SKILL.md` at the skill root, keep `name: agent-trust`, and install the Python package in the environment that will run the checks.
+
+### Runtime verification
+
+After skill installation, verify the Python package interface in the agent environment:
 
 ```bash
 python3 -m pip install git+https://github.com/tigrohvost/agent-trust.git
@@ -100,6 +122,8 @@ Do not include actual secret values. Use labels like `api_token`, `wallet_key`, 
 
 ## Troubleshooting
 
+- **Codex does not see the skill**: place the repository at `${CODEX_HOME:-$HOME/.codex}/skills/agent-trust`, keep `SKILL.md` at that folder root, and restart Codex after install/update.
+- **Claude/Claude Code does not see the skill**: confirm your Claude environment supports local skills, then use this repository as a complete skill folder rather than copying only snippets.
 - **`SKILL.md` not found during OpenClaw install**: install from the repository root (`git:tigrohvost/agent-trust@main`), not from a subdirectory.
 - **`agent-trust` command not found**: install the Python package in the same environment used by the agent, or run `python3 -m agent_trust.cli ...`.
 - **`agent-trust-skill` command not found**: run `python3 -m agent_trust.skill manifest --compact`.
@@ -115,6 +139,17 @@ cd agent-trust
 python3 -m pip install -e '.[test]'
 python3 -m pytest -q
 ```
+
+## Cross-agent design notes
+
+This skill intentionally follows a small common denominator for OpenClaw, Codex, Claude-style skills, and other `SKILL.md` consumers:
+
+- stable root file: `SKILL.md`;
+- stable slug: `name: agent-trust`;
+- concise `description` for progressive-disclosure loaders;
+- examples and schemas kept in predictable root-relative paths;
+- no hidden network, wallet, signing, payment, posting, or secret-reading behavior;
+- instructions say what evidence to collect and where to stop, not just how to run a command.
 
 ## Russian note / Русская заметка
 
