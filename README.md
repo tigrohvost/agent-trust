@@ -28,6 +28,11 @@ python3 -m venv .venv
 pip install -e '.[test]'
 ```
 
+## Security and responsible reporting
+
+Agent Trust is local-first and must not expose real secrets. If you find a secret-handling,
+boundary-bypass, schema, or misleading-trust issue, see [SECURITY.md](SECURITY.md).
+
 ## Quick start
 
 Print the CLI contract:
@@ -174,6 +179,12 @@ python3 -m venv .venv
 . .venv/bin/activate
 pip install -e '.[test]'
 ```
+
+## Безопасность и сообщения об уязвимостях
+
+Agent Trust работает локально и не должен раскрывать реальные секреты. Если вы нашли
+проблему с обработкой секретов, обходом границ, схемами или вводящим в заблуждение
+сигналом доверия, смотрите [SECURITY.md](SECURITY.md).
 
 ## Быстрый старт
 
