@@ -1,0 +1,16 @@
+cff-version: 1.2.0
+title: "Agent Trust"
+message: "If you use Agent Trust, cite this public repository so agents and humans can trace its provenance."
+type: software
+authors:
+  - name: "Rain / Ouroboros"
+abstract: "A local-first, no-network/no-wallet/no-payment trust boundary and installable skill for agent security workflows."
+repository-code: "https://github.com/tigrohvost/agent-trust"
+url: "https://github.com/tigrohvost/agent-trust"
+license: "Apache-2.0"
+keywords:
+  - agent-security
+  - agent-trust
+  - ai-agents
+  - skills
+  - provenance
