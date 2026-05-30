@@ -1,0 +1,191 @@
+{
+  "artifact": "agent-trust-schema",
+  "artifact_version": "agent-trust-schema-v1",
+  "bundle_contract": "agent-trust-bundle",
+  "contract_version": "agent-trust-bundle-v1",
+  "description": "Concise JSON Schema-like contract artifact for the local Agent Trust Bundle input, output, and error envelopes.",
+  "error_envelopes": {
+    "cli": {
+      "exit_code": 2,
+      "shape": {
+        "error": {
+          "code": "invalid_agent_trust_input|unsupported_agent_trust_contract_version",
+          "message": "string"
+        }
+      },
+      "stream": "stderr"
+    },
+    "http": {
+      "shape": {
+        "error": {
+          "code": "invalid_agent_trust_input|unsupported_agent_trust_contract_version",
+          "message": "string"
+        }
+      },
+      "status_code": 400
+    }
+  },
+  "examples": {
+    "cli_contract": "python3 -m ouroboros.agent_trust_cli --print-contract",
+    "input": "docs/examples/agent_trust_input.json",
+    "local_http_contract": "GET /api/agent-trust/contract",
+    "output": "docs/examples/agent_trust_output.json"
+  },
+  "input_schema": {
+    "additionalProperties": true,
+    "properties": {
+      "contract_version": {
+        "default": "agent-trust-bundle-v1",
+        "enum": [
+          "agent-trust-bundle-v1"
+        ],
+        "type": "string"
+      },
+      "intended_integration_context": {
+        "description": "Buyer/consumer supplied description of where this trust bundle would be used in an agent loop before a risky action.",
+        "type": "string"
+      },
+      "ledger": {
+        "description": "Optional local mock ledger rows; never real payments or wallet records.",
+        "type": "array"
+      },
+      "policy": {
+        "additionalProperties": true,
+        "description": "Local x402 policy quote input. The current examples include agent_id, settlement, allowed_resources, per_request_cap, and per_agent_budget_cap.",
+        "required": [
+          "agent_id",
+          "allowed_resources",
+          "per_request_cap",
+          "per_agent_budget_cap",
+          "settlement"
+        ],
+        "type": "object"
+      },
+      "provenance_evidence": {
+        "description": "Optional discovery/identity provenance evidence, including DNS-AID/ANS-style claims. Evidence only; not authorization or trust by itself.",
+        "required": false,
+        "type": "object|array|string"
+      },
+      "resource": {
+        "description": "Optional resource/API URL or identifier being considered.",
+        "type": "string"
+      },
+      "tool_descriptor": {
+        "description": "Optional local descriptor for the tool/API/MCP endpoint under consideration; it is inspected, not executed.",
+        "oneOf": [
+          {
+            "type": "object"
+          },
+          {
+            "type": "array"
+          },
+          {
+            "type": "string"
+          }
+        ]
+      }
+    },
+    "required": [
+      "policy"
+    ],
+    "type": "object"
+  },
+  "output_schema": {
+    "properties": {
+      "bundle_id": {
+        "type": "string"
+      },
+      "contract_version": {
+        "enum": [
+          "agent-trust-bundle-v1"
+        ],
+        "type": "string"
+      },
+      "controls": {
+        "items": {
+          "type": "string"
+        },
+        "type": "array"
+      },
+      "digest": {
+        "type": "string"
+      },
+      "execution": {
+        "const": false,
+        "type": "boolean"
+      },
+      "intended_integration_context": {
+        "description": "Preserved integration context when supplied by the request.",
+        "type": "string"
+      },
+      "network_calls": {
+        "const": false,
+        "type": "boolean"
+      },
+      "policy_quote": {
+        "type": "object"
+      },
+      "provenance_evidence": {
+        "description": "Normalized no-network/no-execution provenance evidence; discovery and identity claims remain evidence only and still require policy/warrant evaluation.",
+        "required": true,
+        "type": "object"
+      },
+      "reasons": {
+        "items": {
+          "type": "string"
+        },
+        "type": "array"
+      },
+      "settlement": {
+        "type": [
+          "string",
+          "null"
+        ]
+      },
+      "supported_contract_versions": {
+        "items": {
+          "type": "string"
+        },
+        "type": "array"
+      },
+      "tool_risk": {
+        "type": "object"
+      },
+      "verdict": {
+        "description": "Machine-readable pre-action verdict, e.g. allow/review/deny.",
+        "type": "string"
+      },
+      "wallet_access": {
+        "const": false,
+        "type": "boolean"
+      }
+    },
+    "required": [
+      "bundle_id",
+      "contract_version",
+      "supported_contract_versions",
+      "verdict",
+      "reasons",
+      "controls",
+      "network_calls",
+      "wallet_access",
+      "execution",
+      "settlement",
+      "policy_quote",
+      "tool_risk",
+      "intended_integration_context",
+      "provenance_evidence",
+      "digest"
+    ],
+    "type": "object"
+  },
+  "safety_boundary": {
+    "execution": false,
+    "network_calls": false,
+    "real_money": false,
+    "wallet_access": false
+  },
+  "supported_contract_versions": [
+    "agent-trust-bundle-v1"
+  ]
+}

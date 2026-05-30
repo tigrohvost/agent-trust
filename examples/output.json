@@ -1,0 +1,95 @@
+{
+  "bundle_id": "agenttrust-f30af7e2d11ed4d2",
+  "contract_version": "agent-trust-bundle-v1",
+  "controls": [
+    "network_calls_false",
+    "wallet_access_false",
+    "execution_false",
+    "x402_settlement:mock-local-no-money-policy"
+  ],
+  "digest": "f30af7e2d11ed4d2adf1dae81d999442bbbba5070ee70213ddb78cf08808060b",
+  "execution": false,
+  "intended_integration_context": "agent_framework_pre_action_gate_before_mcp_tool_or_paid_api_call",
+  "network_calls": false,
+  "policy_quote": {
+    "agent_budget": null,
+    "agent_id": "demo-agent",
+    "allowed_resources": [
+      "https://api.example.test/report"
+    ],
+    "max_amount": null,
+    "policy_version": "x402-policy-v1",
+    "quote_id": "fa1d3f2053aa3ec74f944c12d0e3ec335f1be7102155f1cc9db190d95f489da6",
+    "remaining_budget": null,
+    "requirements": [
+      "payment_id_required",
+      "resource_allowlisted",
+      "amount_within_request_cap",
+      "amount_within_agent_budget",
+      "no_conflicting_replay"
+    ],
+    "resource": "https://api.example.test/report",
+    "resource_allowed": true,
+    "settlement": "mock-local-no-money-policy"
+  },
+  "provenance_evidence": {
+    "attestation_version": "provenance-evidence-v1",
+    "evidence_count": 1,
+    "execution": false,
+    "items": [
+      {
+        "capability_claims": [
+          "agent-trust-bundle",
+          "pre-action-review"
+        ],
+        "discovery_claim": "DNS-AID-style record advertises an agent/MCP discovery endpoint for demonstration only",
+        "dns_name": "agent-trust-demo.invalid",
+        "endpoint": "https://agent-trust-demo.invalid/.well-known/agent.json",
+        "identity_claim": "ANS-style operator claim: demo-agent.invalid controls this example surface",
+        "kind": "discovery_and_identity_claim",
+        "signals": {
+          "discovery_claim_present": true,
+          "dns_aid_ans_style": true,
+          "identity_claim_present": true
+        },
+        "source": "dns_aid_ans",
+        "transport": "https"
+      }
+    ],
+    "network_calls": false,
+    "trust_boundary": "Discovery and identity provenance is evidence only; it is not authorization, trust, or permission to act without policy and warrant evaluation."
+  },
+  "reasons": [
+    "tool_risk_high"
+  ],
+  "settlement": "mock-local-no-money-policy",
+  "supported_contract_versions": [
+    "agent-trust-bundle-v1"
+  ],
+  "tool_risk": {
+    "attestation_version": "tool-risk-v1",
+    "execution": false,
+    "finding_count": 1,
+    "findings": [
+      {
+        "kind": "mcp_server",
+        "name": "example-report-api",
+        "risk": "HIGH",
+        "signals": {
+          "auth_or_secret_reference": true,
+          "dangerous_words": [
+            "http"
+          ],
+          "execution_capability": false,
+          "filesystem_or_write_reach": false,
+          "remote_or_network": true,
+          "urls": []
+        }
+      }
+    ],
+    "network_calls": false,
+    "overall_risk": "HIGH"
+  },
+  "verdict": "review",
+  "wallet_access": false
+}

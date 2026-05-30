@@ -1,0 +1,321 @@
+{
+  "$id": "https://ouroboros.local/schemas/agent-trust-bundle-v1.schema.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "description": "Deterministic local trust bundle emitted by the Agent Trust Bundle CLI and HTTP surfaces.",
+  "properties": {
+    "bundle_id": {
+      "pattern": "^agenttrust-[0-9a-f]{16}$",
+      "type": "string"
+    },
+    "contract_version": {
+      "const": "agent-trust-bundle-v1",
+      "type": "string"
+    },
+    "controls": {
+      "items": {
+        "type": "string"
+      },
+      "type": "array"
+    },
+    "digest": {
+      "pattern": "^[0-9a-f]{64}$",
+      "type": "string"
+    },
+    "execution": {
+      "const": false,
+      "type": "boolean"
+    },
+    "intended_integration_context": {
+      "description": "Optional buyer/consumer integration context preserved from the request when supplied.",
+      "type": "string"
+    },
+    "network_calls": {
+      "const": false,
+      "type": "boolean"
+    },
+    "policy_quote": {
+      "additionalProperties": true,
+      "properties": {
+        "agent_budget": {
+          "type": [
+            "string",
+            "number",
+            "null"
+          ]
+        },
+        "agent_id": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "allowed_resources": {
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "max_amount": {
+          "type": [
+            "string",
+            "number",
+            "null"
+          ]
+        },
+        "per_agent_budget_cap": {
+          "type": [
+            "string",
+            "number",
+            "null"
+          ]
+        },
+        "per_request_cap": {
+          "type": [
+            "string",
+            "number",
+            "null"
+          ]
+        },
+        "policy_version": {
+          "type": "string"
+        },
+        "quote_id": {
+          "type": "string"
+        },
+        "remaining_budget": {
+          "type": [
+            "string",
+            "number",
+            "null"
+          ]
+        },
+        "requirements": {
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "resource": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "resource_allowed": {
+          "type": [
+            "boolean",
+            "null"
+          ]
+        },
+        "settlement": {
+          "type": [
+            "string",
+            "null"
+          ]
+        }
+      },
+      "required": [
+        "agent_id",
+        "allowed_resources",
+        "policy_version",
+        "quote_id",
+        "requirements",
+        "resource",
+        "resource_allowed",
+        "settlement"
+      ],
+      "type": "object"
+    },
+    "provenance_evidence": {
+      "additionalProperties": true,
+      "properties": {
+        "attestation_version": {
+          "const": "provenance-evidence-v1"
+        },
+        "evidence_count": {
+          "minimum": 0,
+          "type": "integer"
+        },
+        "execution": {
+          "const": false
+        },
+        "items": {
+          "items": {
+            "type": "object"
+          },
+          "type": "array"
+        },
+        "network_calls": {
+          "const": false
+        },
+        "trust_boundary": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "attestation_version",
+        "evidence_count",
+        "items",
+        "network_calls",
+        "execution",
+        "trust_boundary"
+      ],
+      "type": "object"
+    },
+    "reasons": {
+      "items": {
+        "type": "string"
+      },
+      "type": "array"
+    },
+    "settlement": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "supported_contract_versions": {
+      "items": {
+        "type": "string"
+      },
+      "type": "array"
+    },
+    "tool_risk": {
+      "additionalProperties": true,
+      "properties": {
+        "attestation_version": {
+          "type": "string"
+        },
+        "execution": {
+          "const": false,
+          "type": "boolean"
+        },
+        "finding_count": {
+          "type": "integer"
+        },
+        "findings": {
+          "items": {
+            "additionalProperties": true,
+            "properties": {
+              "kind": {
+                "type": "string"
+              },
+              "name": {
+                "type": "string"
+              },
+              "risk": {
+                "enum": [
+                  "LOW",
+                  "MEDIUM",
+                  "HIGH",
+                  "BLOCK"
+                ],
+                "type": "string"
+              },
+              "signals": {
+                "additionalProperties": true,
+                "properties": {
+                  "auth_or_secret_reference": {
+                    "type": "boolean"
+                  },
+                  "dangerous_words": {
+                    "items": {
+                      "type": "string"
+                    },
+                    "type": "array"
+                  },
+                  "execution_capability": {
+                    "type": "boolean"
+                  },
+                  "filesystem_or_write_reach": {
+                    "type": "boolean"
+                  },
+                  "remote_or_network": {
+                    "type": "boolean"
+                  },
+                  "urls": {
+                    "items": {
+                      "type": "string"
+                    },
+                    "type": "array"
+                  }
+                },
+                "required": [
+                  "remote_or_network",
+                  "auth_or_secret_reference",
+                  "filesystem_or_write_reach",
+                  "execution_capability",
+                  "dangerous_words",
+                  "urls"
+                ],
+                "type": "object"
+              }
+            },
+            "required": [
+              "name",
+              "kind",
+              "risk",
+              "signals"
+            ],
+            "type": "object"
+          },
+          "type": "array"
+        },
+        "network_calls": {
+          "const": false,
+          "type": "boolean"
+        },
+        "overall_risk": {
+          "enum": [
+            "LOW",
+            "MEDIUM",
+            "HIGH",
+            "BLOCK"
+          ],
+          "type": "string"
+        }
+      },
+      "required": [
+        "attestation_version",
+        "overall_risk",
+        "finding_count",
+        "findings",
+        "network_calls",
+        "execution"
+      ],
+      "type": "object"
+    },
+    "verdict": {
+      "enum": [
+        "allow",
+        "review",
+        "deny"
+      ],
+      "type": "string"
+    },
+    "wallet_access": {
+      "const": false,
+      "type": "boolean"
+    }
+  },
+  "required": [
+    "bundle_id",
+    "contract_version",
+    "supported_contract_versions",
+    "verdict",
+    "reasons",
+    "controls",
+    "network_calls",
+    "wallet_access",
+    "execution",
+    "settlement",
+    "policy_quote",
+    "tool_risk",
+    "intended_integration_context",
+    "provenance_evidence",
+    "digest"
+  ],
+  "title": "Agent Trust Bundle output v1",
+  "type": "object"
+}

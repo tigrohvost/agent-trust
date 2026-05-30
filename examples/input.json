@@ -1,0 +1,41 @@
+{
+  "contract_version": "agent-trust-bundle-v1",
+  "intended_integration_context": "agent_framework_pre_action_gate_before_mcp_tool_or_paid_api_call",
+  "ledger": [
+    {
+      "agent_id": "demo-agent",
+      "amount": "0.25",
+      "payment_id": "paid-001"
+    }
+  ],
+  "policy": {
+    "agent_id": "demo-agent",
+    "allowed_resources": [
+      "https://api.example.test/report"
+    ],
+    "per_agent_budget_cap": "1.00",
+    "per_request_cap": "0.10",
+    "settlement": "mock-local-no-money-policy"
+  },
+  "provenance_evidence": {
+    "capability_claims": [
+      "agent-trust-bundle",
+      "pre-action-review"
+    ],
+    "discovery_claim": "DNS-AID-style record advertises an agent/MCP discovery endpoint for demonstration only",
+    "dns_name": "agent-trust-demo.invalid",
+    "endpoint": "https://agent-trust-demo.invalid/.well-known/agent.json",
+    "identity_claim": "ANS-style operator claim: demo-agent.invalid controls this example surface",
+    "kind": "discovery_and_identity_claim",
+    "source": "dns_aid_ans",
+    "transport": "https"
+  },
+  "resource": "https://api.example.test/report",
+  "tool_descriptor": {
+    "auth": "env:EXAMPLE_API_KEY",
+    "kind": "mcp_server",
+    "name": "example-report-api",
+    "read_only": true,
+    "transport": "https"
+  }
+}

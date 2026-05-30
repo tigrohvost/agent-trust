@@ -1,0 +1,89 @@
+{
+  "name": "Agent Trust Skill",
+  "version": "4.4.613",
+  "purpose": "Local pre-action gate for AI agents before installing or enabling an external skill/plugin/MCP helper/repo dependency.",
+  "entrypoint": "docs/examples/agent_trust_skill.py",
+  "supported_actions": [
+    "install_skill"
+  ],
+  "install_use_boundary": {
+    "dependency_free": true,
+    "local_only": true,
+    "no_network": true,
+    "no_install": true,
+    "no_execution": true,
+    "no_secret_reads": true
+  },
+  "invocation_examples": [
+    "python3 docs/examples/agent_trust_skill.py manifest",
+    "python3 docs/examples/agent_trust_skill.py manifest --compact",
+    "python3 docs/examples/agent_trust_skill_installability_check.py",
+    "python3 docs/examples/agent_trust_skill.py check --action install_skill --source github --url https://github.com/example/pr-review-helper --requested-permission repo_read,read_env,network --warrant \"summarize current PR only\" --boundary \"no secrets, no external upload, no credential access\""
+  ],
+  "expected_verdict_fields": [
+    "decision",
+    "source_classification",
+    "risk_signals",
+    "allowed_next_steps",
+    "forbidden_next_steps",
+    "secret_access_authorized",
+    "component_kind",
+    "dependency_kind",
+    "asbom",
+    "asbom.component_kind",
+    "asbom.dependency_kind",
+    "asbom.authority_surface",
+    "asbom.access_surface",
+    "asbom.exfiltration_paths",
+    "asbom.lifecycle_hooks",
+    "asbom.provenance_evidence_not_trust",
+    "asbom.review_requirement"
+  ],
+  "hard_stops": [
+    "secrets exposure or secret value reads",
+    "repository settings or visibility changes",
+    "outreach or posting",
+    "wallet access or signing",
+    "payment or real-money actions",
+    "live network execution or exfiltration",
+    "impersonation or spam"
+  ],
+  "validation_commands": [
+    "python3 -m json.tool docs/examples/agent_trust_skill_manifest.json",
+    "python3 docs/examples/agent_trust_skill.py manifest --compact",
+    "python3 docs/examples/agent_trust_skill_installability_check.py",
+    "python3 docs/examples/agent_trust_skill.py check --action install_skill --source github --url https://github.com/example/pr-review-helper --requested-permission repo_read,read_env,network --warrant \"summarize current PR only\" --boundary \"no secrets, no external upload, no credential access\""
+  ],
+  "contract_notes": [
+    "Discovery and provenance are evidence, not authorization.",
+    "The checker classifies external skills as dependencies with authority surface, not harmless convenience files.",
+    "The manifest now points agents at the installability self-check before first use.",
+    "A deny_or_require_review verdict means stop or reduce permissions/sandbox before use.",
+    "The one_hop_install_packet gives agents the shortest manifest -> self-check -> install_skill pre-action path before using the skill."
+  ],
+  "one_hop_install_packet": {
+    "purpose": "One-hop install/use/verify packet for Codex, Claude, OpenClaw, Hermes, and similar agents before using Agent Trust Skill.",
+    "landing_doc": "docs/AGENT_TRUST_SKILL.md",
+    "machine_readable_manifest": "docs/examples/agent_trust_skill_manifest.json",
+    "skill_entrypoint": "docs/examples/agent_trust_skill.py",
+    "installability_self_check_command": "python3 docs/examples/agent_trust_skill_installability_check.py",
+    "minimal_install_skill_check_command": "python3 docs/examples/agent_trust_skill.py check --action install_skill --source github --url https://github.com/example/pr-review-helper --requested-permission repo_read,read_env,network --warrant \"summarize current PR only\" --boundary \"no secrets, no external upload, no credential access\"",
+    "expected_acceptance_signals": [
+      "installability self-check emits ok=true",
+      "installability self-check emits decision=agent_trust_skill_installability_ready",
+      "minimal install_skill check emits decision=deny_or_require_review or require_review for secret/network-capable external skill",
+      "secret_access_authorized=false",
+      "asbom.provenance_evidence_not_trust=true",
+      "review-only boundary preserved"
+    ],
+    "boundary": {
+      "review_only": true,
+      "no_secret_reads": true,
+      "no_network_calls": true,
+      "no_install_or_shell_execution": true,
+      "no_wallet_or_signing": true,
+      "no_payment_or_real_money": true,
+      "no_outreach_or_posting": true
+    }
+  }
+}
