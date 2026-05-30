@@ -59,13 +59,24 @@ Claude-style agent skills also center on a `SKILL.md` file with frontmatter plus
 
 ### Runtime verification
 
-After skill installation, verify the Python package interface in the agent environment:
+After skill installation, verify the Python package interface in the agent environment. Prefer a virtual environment or `pipx`-style isolated install; many modern agent hosts use PEP 668 externally-managed Python environments and will reject system-wide `pip install`:
 
 ```bash
-python3 -m pip install git+https://github.com/tigrohvost/agent-trust.git
+python3 -m venv .venv
+. .venv/bin/activate
+python3 -m pip install -e '.[test]'
 agent-trust --print-contract
 agent-trust --input examples/input.json
 agent-trust-skill manifest --compact
+```
+
+For a one-command remote package install outside a cloned repo, use the same isolation rule:
+
+```bash
+python3 -m venv /tmp/agent-trust-venv
+. /tmp/agent-trust-venv/bin/activate
+python3 -m pip install git+https://github.com/tigrohvost/agent-trust.git
+agent-trust --print-contract
 ```
 
 If console scripts are not on `PATH`, use module entrypoints instead:
@@ -125,6 +136,7 @@ Do not include actual secret values. Use labels like `api_token`, `wallet_key`, 
 - **Codex does not see the skill**: place the repository at `${CODEX_HOME:-$HOME/.codex}/skills/agent-trust`, keep `SKILL.md` at that folder root, and restart Codex after install/update.
 - **Claude/Claude Code does not see the skill**: confirm your Claude environment supports local skills, then use this repository as a complete skill folder rather than copying only snippets.
 - **`SKILL.md` not found during OpenClaw install**: install from the repository root (`git:tigrohvost/agent-trust@main`), not from a subdirectory.
+- **PEP 668 / externally-managed Python error**: create a virtual environment or use `pipx`; do not force install into the system Python used by the OS.
 - **`agent-trust` command not found**: install the Python package in the same environment used by the agent, or run `python3 -m agent_trust.cli ...`.
 - **`agent-trust-skill` command not found**: run `python3 -m agent_trust.skill manifest --compact`.
 - **Example path missing**: run commands from the repository root, or pass your own JSON input path.
