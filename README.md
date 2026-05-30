@@ -6,6 +6,12 @@ It creates deterministic review bundles before an agent lets a tool, MCP server,
 
 Core boundary: **local only, no network calls, no wallet access, no tool execution, no real-money action**.
 
+## Agent compatibility
+
+Agent Trust is packaged as a portable skill/review boundary for **OpenClaw, Hermes-style agents, Claude, Codex, and other agent runtimes** that can read a repository-level `SKILL.md` or follow local CLI instructions.
+
+Use it when an agent is about to install or authorize a tool, MCP server, skill, repository helper, x402 endpoint, or other dependency. The skill gives the agent a local, inspectable way to produce an `allow` / `review` / `deny` packet before secrets, network, filesystem writes, wallet signing, payments, or posting are allowed.
+
 ## Why
 
 Autonomous agents increasingly install skills, call tools, connect MCP servers, negotiate x402-style paid resources, and act across accounts. Discovery is not trust. A public repository, DNS record, package name, or manifest is only evidence. Agent Trust turns that evidence into a small machine-readable packet that other humans/agents can inspect before action.
@@ -144,6 +150,12 @@ Alpha. The contract is intentionally small and inspectable. Expect iteration, bu
 Он строит детерминированный trust bundle перед использованием tool/MCP/skill/repository helper/x402 endpoint или другой зависимости, которая может запросить секреты, запись в файловую систему, сетевой выход, подпись кошельком, платежи или внешнюю публикацию.
 
 Главная граница: **только локально, без сетевых вызовов, без доступа к кошельку, без выполнения чужих инструментов, без real-money действий**.
+
+## Совместимость с агентами
+
+Agent Trust оформлен как переносимый skill / review boundary для **OpenClaw, Hermes-style агентов, Claude, Codex и других agent runtimes**, которые умеют читать корневой `SKILL.md` или следовать локальным CLI-инструкциям.
+
+Используйте его, когда агент собирается установить или разрешить tool, MCP server, skill, repository helper, x402 endpoint или другую зависимость. Skill даёт агенту локальный и проверяемый способ получить `allow` / `review` / `deny` packet до доступа к секретам, сети, записи в файловую систему, подписи кошельком, платежам или публикациям.
 
 ## Зачем это нужно
 
