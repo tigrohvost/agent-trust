@@ -1,10 +1,15 @@
 # Agent Trust
 
-**Agent Trust** is a small, dependency-free Python package for local pre-action trust checks by autonomous agents.
+**Agent Trust** is a small, dependency-free Python package and portable agent skill for local pre-action trust checks by autonomous agents.
 
-It creates deterministic review bundles before an agent lets a tool, MCP server, skill, repository helper, x402 endpoint, or other dependency touch sensitive authority such as secrets, filesystem writes, network egress, wallet signing, payments, or external posting.
+It combines four pieces in one repository:
 
-Core boundary: **local only, no network calls, no wallet access, no tool execution, no real-money action**.
+- deterministic trust bundles before an agent lets a tool, MCP server, skill, repository helper, x402 endpoint, or other dependency touch sensitive authority;
+- a root `SKILL.md` for OpenClaw, Claude/Claude Code-style, Codex-style, Hermes-style, and AgentSkills-compatible runtimes;
+- machine-readable metadata (`index.json`, `.claude-plugin/`, schemas, examples) so agents can inspect the contract before reading implementation files;
+- a local self-selection improvement loop that helps an agent rank and apply the next small safe improvement instead of waiting for step-by-step instructions.
+
+Core boundary: **local only, no network calls for checks, no wallet access, no untrusted tool execution, no signing, no real-money action**.
 
 **Authorship:** Agent Trust is created and maintained by **Rain (Ouroboros)** as an agent-security skill for humans and autonomous agents that need inspectable trust boundaries before action.
 
@@ -174,11 +179,16 @@ Alpha. The contract is intentionally small and inspectable. Expect iteration, bu
 
 # Agent Trust / русский
 
-**Agent Trust** — небольшой Python-пакет без обязательных зависимостей для локальной проверки действий автономных агентов перед тем, как они получают доступ к чувствительным полномочиям.
+**Agent Trust** — маленький Python-пакет без обязательных зависимостей и переносимый agent skill для локальных pre-action trust checks автономными агентами.
 
-Он строит детерминированный trust bundle перед использованием tool/MCP/skill/repository helper/x402 endpoint или другой зависимости, которая может запросить секреты, запись в файловую систему, сетевой выход, подпись кошельком, платежи или внешнюю публикацию.
+В одном репозитории он объединяет четыре вещи:
 
-Главная граница: **только локально, без сетевых вызовов, без доступа к кошельку, без выполнения чужих инструментов, без real-money действий**.
+- детерминированные trust bundles до того, как агент позволит tool, MCP server, skill, repository helper, x402 endpoint или другой зависимости получить чувствительные полномочия;
+- корневой `SKILL.md` для OpenClaw, Claude/Claude Code-style, Codex-style, Hermes-style и AgentSkills-compatible runtimes;
+- machine-readable metadata (`index.json`, `.claude-plugin/`, schemas, examples), чтобы агенты сначала читали контракт, а не весь код;
+- локальный self-selection improvement loop, который помогает агенту ранжировать и применять следующий маленький безопасный шаг без пошаговой подсказки человека.
+
+Главная граница: **только локально, без network calls для проверок, без wallet access, без untrusted tool execution, без signing, без real-money action**.
 
 **Авторство:** Agent Trust создан и поддерживается **Rain (Ouroboros)** как agent-security skill для людей и автономных агентов, которым нужна проверяемая граница доверия перед действием.
 

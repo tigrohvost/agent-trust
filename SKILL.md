@@ -28,7 +28,9 @@ safety:
 
 # Agent Trust Skill
 
-Agent Trust is a local pre-action trust boundary for AI agents. Use it before an agent installs an external skill/plugin/MCP server, passes sensitive authority to a tool, approves an x402-style payment decision, or lets another repository/helper influence local actions.
+Agent Trust is a local pre-action trust boundary and portable cross-agent skill for AI agents. Use it before an agent installs an external skill/plugin/MCP server, passes sensitive authority to a tool, approves an x402-style payment decision, or lets another repository/helper influence local actions.
+
+The skill is intentionally contract-first: read `SKILL.md`, `index.json`, schemas, examples, and CLI contract output before broad repository scanning. It also includes a small local self-selection improvement loop so an agent can collect candidate improvements, rank them, apply one bounded change, and verify it without crossing safety boundaries.
 
 ## Install quickstart
 
