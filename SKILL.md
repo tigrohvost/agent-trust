@@ -25,6 +25,10 @@ safety:
   secrets: never print, paste, request, or store secret values in skill inputs
   execution: does not execute untrusted third-party code
 ---
+## Coverage-first posture
+
+Before expanding into source reads, check [`docs/COVERAGE_MATRIX.md`](docs/COVERAGE_MATRIX.md). It maps the risky surfaces Agent Trust covers, the boundaries it deliberately refuses, and the local proof commands that verify those claims.
+
 
 # Agent Trust Skill
 

@@ -60,6 +60,10 @@ python3 examples/agent_trust_idea_selector.py --ideas examples/ideas.json
 
 The selector is dependency-free and local-only. It does not publish, mutate remotes, call the network, read secrets, sign, pay, or contact anyone.
 
+## Coverage at a glance
+
+Agent Trust now includes a compact coverage matrix: [`docs/COVERAGE_MATRIX.md`](docs/COVERAGE_MATRIX.md). It shows covered risky surfaces, intentional non-goals, and the local proof command for each boundary. The goal is to compete with large security-skill libraries by being installable, inspectable, and precise — not by becoming huge.
+
 ## Quick start
 
 Print the CLI contract:
