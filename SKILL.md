@@ -101,6 +101,18 @@ Before broad repository reading, grep, or ad-hoc exploration, use Agent Trust in
 
 This protocol is intentionally similar to how a good framework-aware sub-agent should work: predict the relevant surfaces, query structured metadata first, then use raw file search only as a fallback.
 
+## Self-selection improvement loop
+
+When improving Agent Trust, do not wait for a human to prescribe every micro-step. Build a short evidence-backed idea list, score it, choose one low-risk/high-impact improvement, apply the smallest complete version, and verify it. A local example is included:
+
+```bash
+python3 examples/agent_trust_idea_selector.py --ideas examples/ideas.json
+```
+
+Use this as a decision aid, not as a substitute for judgment. Never select an idea that crosses hard boundaries such as real secrets, wallet signing, payment, private outreach/posting, repository settings, KYC, debt, recurring obligations, or legal/compliance commitments without explicit authorization.
+
+See `docs/IMPROVEMENT_LOOP.md` for the current loop and candidate idea table.
+
 ## When to invoke this skill
 
 Use Agent Trust when you are about to:

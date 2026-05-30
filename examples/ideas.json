@@ -1,0 +1,38 @@
+[
+  {
+    "id": "machine-readable-improvement-selector",
+    "title": "Add a local selector for evidence-backed Agent Trust improvements",
+    "impact": 4,
+    "evidence": 5,
+    "risk": 1,
+    "effort": 2,
+    "notes": "Embodies the habit of collecting ideas, ranking them, and applying the smallest useful one."
+  },
+  {
+    "id": "framework-install-probes",
+    "title": "Add framework-specific install probes for OpenClaw, Codex, Claude, and Hermes-style agents",
+    "impact": 5,
+    "evidence": 3,
+    "risk": 2,
+    "effort": 4,
+    "notes": "Promising, but should wait for concrete host-specific evidence so probes do not become guesswork."
+  },
+  {
+    "id": "threat-taxonomy-slices",
+    "title": "Expand the local risk taxonomy for tool, MCP, repo-helper, and skill supply-chain cases",
+    "impact": 5,
+    "evidence": 4,
+    "risk": 3,
+    "effort": 5,
+    "notes": "Valuable but larger; apply one narrow taxonomy slice at a time."
+  },
+  {
+    "id": "hosted-demo",
+    "title": "Expose a hosted Agent Trust demo endpoint",
+    "impact": 4,
+    "evidence": 2,
+    "risk": 5,
+    "effort": 5,
+    "notes": "Not selected by default because it crosses network/exposure boundaries."
+  }
+]
