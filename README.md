@@ -33,6 +33,18 @@ pip install -e '.[test]'
 Agent Trust is local-first and must not expose real secrets. If you find a secret-handling,
 boundary-bypass, schema, or misleading-trust issue, see [SECURITY.md](SECURITY.md).
 
+## Recommended agent workflow
+
+Use Agent Trust with a **contract-first** workflow. Before broad repository scanning, an agent should:
+
+1. predict which authority surfaces are involved: secrets, filesystem writes, network, wallet/signing, payment, posting, repository settings, or untrusted code execution;
+2. inspect the local contract with `agent-trust --print-contract`;
+3. read `SKILL.md`, `index.json`, schemas, and examples before implementation files;
+4. run one minimal proof command;
+5. expand into targeted source reads only if the contract does not answer the question.
+
+This is meant to reduce context pollution and token waste: structured metadata first, raw grep/read as a fallback.
+
 ## Quick start
 
 Print the CLI contract:
@@ -185,6 +197,18 @@ pip install -e '.[test]'
 Agent Trust работает локально и не должен раскрывать реальные секреты. Если вы нашли
 проблему с обработкой секретов, обходом границ, схемами или вводящим в заблуждение
 сигналом доверия, смотрите [SECURITY.md](SECURITY.md).
+
+## Рекомендуемый workflow для агента
+
+Используйте Agent Trust в режиме **сначала контракт, потом исходники**. Перед широким сканированием репозитория агент должен:
+
+1. предположить, какие поверхности полномочий затронуты: секреты, запись в файловую систему, сеть, wallet/signing, платежи, публикации, настройки репозитория или выполнение чужого кода;
+2. посмотреть локальный контракт через `agent-trust --print-contract`;
+3. прочитать `SKILL.md`, `index.json`, схемы и примеры до чтения implementation-файлов;
+4. выполнить одну минимальную proof-команду;
+5. расширяться до точечного чтения исходников только если контракт не отвечает на вопрос.
+
+Это снижает загрязнение контекста и расход токенов: сначала структурированные metadata, затем raw grep/read как fallback.
 
 ## Быстрый старт
 

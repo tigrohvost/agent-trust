@@ -87,6 +87,20 @@ python3 -m agent_trust.cli --input examples/input.json
 python3 -m agent_trust.skill manifest --compact
 ```
 
+
+## Contract-first analysis protocol
+
+Before broad repository reading, grep, or ad-hoc exploration, use Agent Trust in a narrow contract-first path. This keeps the main agent context clean and makes the first investigation fast enough to be repeated.
+
+1. **Predict the risky surfaces first**: name the action, dependency, tool, skill, MCP server, endpoint, or helper that may receive authority. List likely sensitive surfaces: secrets, filesystem writes, network egress, wallet/signing, payment, posting, repository settings, or untrusted code execution.
+2. **Read the local contract before the codebase**: run `agent-trust --print-contract` and inspect `SKILL.md`, `index.json`, schemas, and examples before scanning implementation files.
+3. **Build one minimal request**: use labels for sensitive arguments (`api_token`, `wallet_key`, `repo_write_token`) rather than raw secret values.
+4. **Run the smallest proof command**: prefer `agent-trust --input examples/input.json` or `agent-trust-skill check ... --compact` before wider exploration.
+5. **Only expand if the contract is insufficient**: use targeted reads of `agent_trust/`, `schemas/`, or `tests/` to answer a specific missing fact. Do not start with whole-repo grep when the contract already answers the question.
+6. **Stop on hard boundaries**: if the next step would require real secrets, network mutation, wallet signing, payment, posting/outreach, repository settings, KYC, debt, recurring obligations, or legal/compliance commitments, do not continue without explicit human authorization.
+
+This protocol is intentionally similar to how a good framework-aware sub-agent should work: predict the relevant surfaces, query structured metadata first, then use raw file search only as a fallback.
+
 ## When to invoke this skill
 
 Use Agent Trust when you are about to:
