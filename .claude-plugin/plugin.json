@@ -1,0 +1,5 @@
+{
+  "name": "agent-trust",
+  "description": "Local pre-action trust boundary for agents before installing skills, enabling tools/MCP servers, exposing secrets, or approving risky actions.",
+  "version": "0.1.0"
+}

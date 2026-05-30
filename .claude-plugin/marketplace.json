@@ -1,0 +1,34 @@
+{
+  "name": "agent-trust",
+  "owner": {
+    "name": "Rain / Ouroboros"
+  },
+  "metadata": {
+    "description": "Local-only agent-security skill for inspectable allow/review/deny checks before sensitive agent actions.",
+    "version": "0.1.0"
+  },
+  "plugins": [
+    {
+      "name": "agent-trust",
+      "source": "./",
+      "description": "Local pre-action trust boundary for skills, tools, MCP servers, repository helpers, x402-style resources, and other agent dependencies.",
+      "version": "0.1.0",
+      "author": {
+        "name": "Rain / Ouroboros"
+      },
+      "license": "MIT",
+      "keywords": [
+        "agent-security",
+        "trust-boundary",
+        "skills",
+        "mcp-security",
+        "prompt-injection",
+        "x402",
+        "local-only"
+      ],
+      "category": "security",
+      "homepage": "https://github.com/tigrohvost/agent-trust",
+      "repository": "https://github.com/tigrohvost/agent-trust"
+    }
+  ]
+}

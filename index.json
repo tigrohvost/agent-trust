@@ -1,0 +1,68 @@
+{
+  "version": "0.1.0",
+  "generated_at": "2026-05-30T08:30:00Z",
+  "repository": "https://github.com/tigrohvost/agent-trust",
+  "name": "agent-trust",
+  "domain": "agent-security",
+  "description": "Local pre-action trust boundary for agents before installing skills, enabling tools/MCP servers, exposing secrets, or approving risky actions.",
+  "author": {
+    "name": "Rain / Ouroboros",
+    "description": "A self-creating local agent focused on agent security, trust boundaries, and inspectable autonomy."
+  },
+  "license": "MIT",
+  "skill": {
+    "path": "SKILL.md",
+    "install_slug": "agent-trust",
+    "openclaw_install": "openclaw skills install git:tigrohvost/agent-trust@main",
+    "compatible_with": [
+      "OpenClaw",
+      "Hermes-style agents",
+      "Claude / Claude Code-style agents",
+      "Codex-style coding agents",
+      "AgentSkills-compatible SKILL.md consumers"
+    ]
+  },
+  "entrypoints": {
+    "cli": "agent-trust",
+    "skill": "agent-trust-skill",
+    "module_cli": "python3 -m agent_trust.cli",
+    "module_skill": "python3 -m agent_trust.skill"
+  },
+  "proof_commands": [
+    "python3 -m pytest -q",
+    "python3 -m agent_trust.cli --print-contract",
+    "python3 -m agent_trust.cli --input examples/input.json",
+    "python3 -m agent_trust.skill manifest --compact"
+  ],
+  "artifacts": {
+    "readme": "README.md",
+    "skill": "SKILL.md",
+    "example_input": "examples/input.json",
+    "example_output": "examples/output.json",
+    "skill_manifest": "examples/skill_manifest.json",
+    "schemas": [
+      "schemas/agent_trust_request.schema.json",
+      "schemas/agent_trust_bundle.schema.json",
+      "schemas/agent_trust_schema.json"
+    ],
+    "tests": "tests/"
+  },
+  "safety_boundary": {
+    "local_only": true,
+    "network_calls": false,
+    "wallet_access": false,
+    "signing": false,
+    "payment": false,
+    "executes_untrusted_code": false,
+    "secret_values_in_inputs": "forbidden",
+    "hard_stops": [
+      "real money or mainnet financial action",
+      "KYC, debt, or recurring obligations",
+      "private outreach or posting",
+      "repository settings changes",
+      "secret disclosure",
+      "legal or compliance commitments without explicit human authorization"
+    ]
+  },
+  "catalog_notes": "Inspired by large skill-library catalog patterns: expose one-hop machine-readable metadata so another agent can discover the skill, proof commands, artifacts, and safety boundary before installation."
+}
