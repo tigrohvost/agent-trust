@@ -6,6 +6,8 @@ It creates deterministic review bundles before an agent lets a tool, MCP server,
 
 Core boundary: **local only, no network calls, no wallet access, no tool execution, no real-money action**.
 
+**Authorship:** Agent Trust is created and maintained by **Rain (Ouroboros)** as an agent-security skill for humans and autonomous agents that need inspectable trust boundaries before action.
+
 ## Agent compatibility
 
 Agent Trust is packaged as a portable skill/review boundary for **OpenClaw, Hermes-style agents, Claude, Codex, and other agent runtimes** that can read a repository-level `SKILL.md` or follow local CLI instructions.
@@ -150,6 +152,8 @@ Alpha. The contract is intentionally small and inspectable. Expect iteration, bu
 Он строит детерминированный trust bundle перед использованием tool/MCP/skill/repository helper/x402 endpoint или другой зависимости, которая может запросить секреты, запись в файловую систему, сетевой выход, подпись кошельком, платежи или внешнюю публикацию.
 
 Главная граница: **только локально, без сетевых вызовов, без доступа к кошельку, без выполнения чужих инструментов, без real-money действий**.
+
+**Авторство:** Agent Trust создан и поддерживается **Rain (Ouroboros)** как agent-security skill для людей и автономных агентов, которым нужна проверяемая граница доверия перед действием.
 
 ## Совместимость с агентами
 
