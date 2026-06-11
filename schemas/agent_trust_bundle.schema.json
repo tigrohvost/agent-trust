@@ -362,6 +362,13 @@
     "wallet_access": {
       "const": false,
       "type": "boolean"
+    },
+    "digest_payload_fields": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "Sorted top-level field names hashed into digest; digest = sha256 of canonical JSON (sort_keys, no spaces, utf-8) of exactly these shipped fields."
     }
   },
   "required": [

@@ -2,7 +2,7 @@
   "name": "Agent Trust Skill",
   "version": "4.4.613",
   "purpose": "Local pre-action gate for AI agents before installing or enabling an external skill/plugin/MCP helper/repo dependency.",
-  "entrypoint": "docs/examples/agent_trust_skill.py",
+  "entrypoint": "python3 -m agent_trust.skill",
   "supported_actions": [
     "install_skill"
   ],
@@ -15,10 +15,10 @@
     "no_secret_reads": true
   },
   "invocation_examples": [
-    "python3 docs/examples/agent_trust_skill.py manifest",
-    "python3 docs/examples/agent_trust_skill.py manifest --compact",
-    "python3 docs/examples/agent_trust_skill_installability_check.py",
-    "python3 docs/examples/agent_trust_skill.py check --action install_skill --source github --url https://github.com/example/pr-review-helper --requested-permission repo_read,read_env,network --warrant \"summarize current PR only\" --boundary \"no secrets, no external upload, no credential access\""
+    "python3 -m agent_trust.skill manifest",
+    "python3 -m agent_trust.skill manifest --compact",
+    "python3 examples/agent_trust_doctor.py",
+    "python3 -m agent_trust.skill check --action install_skill --source github --url https://github.com/example/pr-review-helper --requested-permission repo_read,read_env,network --warrant \"summarize current PR only\" --boundary \"no secrets, no external upload, no credential access\""
   ],
   "expected_verdict_fields": [
     "decision",
@@ -49,10 +49,10 @@
     "impersonation or spam"
   ],
   "validation_commands": [
-    "python3 -m json.tool docs/examples/agent_trust_skill_manifest.json",
-    "python3 docs/examples/agent_trust_skill.py manifest --compact",
-    "python3 docs/examples/agent_trust_skill_installability_check.py",
-    "python3 docs/examples/agent_trust_skill.py check --action install_skill --source github --url https://github.com/example/pr-review-helper --requested-permission repo_read,read_env,network --warrant \"summarize current PR only\" --boundary \"no secrets, no external upload, no credential access\""
+    "python3 -m json.tool examples/skill_manifest.json",
+    "python3 -m agent_trust.skill manifest --compact",
+    "python3 examples/agent_trust_doctor.py",
+    "python3 -m agent_trust.skill check --action install_skill --source github --url https://github.com/example/pr-review-helper --requested-permission repo_read,read_env,network --warrant \"summarize current PR only\" --boundary \"no secrets, no external upload, no credential access\""
   ],
   "contract_notes": [
     "Discovery and provenance are evidence, not authorization.",
@@ -63,14 +63,13 @@
   ],
   "one_hop_install_packet": {
     "purpose": "One-hop install/use/verify packet for Codex, Claude, OpenClaw, Hermes, and similar agents before using Agent Trust Skill.",
-    "landing_doc": "docs/AGENT_TRUST_SKILL.md",
-    "machine_readable_manifest": "docs/examples/agent_trust_skill_manifest.json",
-    "skill_entrypoint": "docs/examples/agent_trust_skill.py",
-    "installability_self_check_command": "python3 docs/examples/agent_trust_skill_installability_check.py",
-    "minimal_install_skill_check_command": "python3 docs/examples/agent_trust_skill.py check --action install_skill --source github --url https://github.com/example/pr-review-helper --requested-permission repo_read,read_env,network --warrant \"summarize current PR only\" --boundary \"no secrets, no external upload, no credential access\"",
+    "landing_doc": "docs/AGENT_TRUST_FOR_AGENTS.md",
+    "machine_readable_manifest": "examples/skill_manifest.json",
+    "skill_entrypoint": "python3 -m agent_trust.skill",
+    "installability_self_check_command": "python3 examples/agent_trust_doctor.py",
+    "minimal_install_skill_check_command": "python3 -m agent_trust.skill check --action install_skill --source github --url https://github.com/example/pr-review-helper --requested-permission repo_read,read_env,network --warrant \"summarize current PR only\" --boundary \"no secrets, no external upload, no credential access\"",
     "expected_acceptance_signals": [
-      "installability self-check emits ok=true",
-      "installability self-check emits decision=agent_trust_skill_installability_ready",
+      "doctor self-check emits ok=true",
       "minimal install_skill check emits decision=deny_or_require_review or require_review for secret/network-capable external skill",
       "secret_access_authorized=false",
       "asbom.provenance_evidence_not_trust=true",

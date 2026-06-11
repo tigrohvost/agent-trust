@@ -16,6 +16,7 @@ from agent_trust.bundle import (
     AGENT_TRUST_MAX_JSON_INPUT_BYTES,
     AGENT_TRUST_MAX_JSON_NESTING_DEPTH,
     SUPPORTED_AGENT_TRUST_BUNDLE_CONTRACT_VERSIONS,
+    AgentTrustContractVersionError,
     AgentTrustInputGuardError,
     build_agent_trust_bundle,
     guard_agent_trust_json_depth,
@@ -62,6 +63,8 @@ AGENT_TRUST_CLI_CONTRACT = {
             "bundle_id",
             "contract_version",
             "supported_contract_versions",
+            "digest",
+            "digest_payload_fields",
             "verdict",
             "reasons",
             "controls",
@@ -93,7 +96,7 @@ AGENT_TRUST_CLI_CONTRACT = {
     ],
 }
 
-if __name__ == "__main__":
+def main(argv: list[str] | None = None) -> int:
     parser = argparse.ArgumentParser(
         description="Build a local no-network/no-wallet/no-execution Agent Trust Bundle.",
     )
@@ -117,10 +120,10 @@ if __name__ == "__main__":
         default=None,
         help="Requested Agent Trust bundle contract version. Defaults to the current supported version.",
     )
-    args = parser.parse_args()
+    args = parser.parse_args(argv)
     if args.print_contract:
         print(json.dumps(AGENT_TRUST_CLI_CONTRACT, sort_keys=True, indent=2, ensure_ascii=False))
-        raise SystemExit(0)
+        return 0
 
     input_path = args.input_path if args.input_path is not None else args.input_arg
 
@@ -154,7 +157,7 @@ if __name__ == "__main__":
                 intended_integration_context=data.get("intended_integration_context"),
                 provenance_evidence=data.get("provenance_evidence"),
             )
-        except ValueError:
+        except AgentTrustContractVersionError:
             print(
                 json.dumps(
                     {"error": {"code": "unsupported_agent_trust_contract_version", "message": f"unsupported Agent Trust contract version: {requested_contract_version}", "requested_contract_version": requested_contract_version, "supported_contract_versions": SUPPORTED_AGENT_TRUST_BUNDLE_CONTRACT_VERSIONS}},
@@ -163,7 +166,7 @@ if __name__ == "__main__":
                 ),
                 file=sys.stderr,
             )
-            raise SystemExit(2)
+            return 2
         print(json.dumps(bundle, sort_keys=True, indent=2, ensure_ascii=False))
     except (OSError, json.JSONDecodeError, ValueError, RecursionError) as exc:
         print(
@@ -174,4 +177,9 @@ if __name__ == "__main__":
             ),
             file=sys.stderr,
         )
-        raise SystemExit(2)
+        return 2
+    return 0
+
+
+if __name__ == "__main__":
+    raise SystemExit(main())

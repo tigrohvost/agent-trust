@@ -10,7 +10,6 @@ from __future__ import annotations
 
 import argparse
 import json
-from datetime import datetime, timezone
 from urllib.parse import urlparse
 
 CONTRACT_VERSION = "agent-trust-skill.v1"
@@ -177,7 +176,12 @@ def check_action(args: argparse.Namespace) -> dict:
             "request_human_or_security_review",
             "use_builtin_readonly_alternative",
         ]
-    elif readonly_only and source_classification in {"local_or_file_source", "untrusted_external_skill"}:
+    elif (
+        readonly_only
+        and source_classification in {"local_or_file_source", "untrusted_external_skill"}
+        and args.warrant.strip()
+        and args.boundary.strip()
+    ):
         decision = "allow_with_constraints"
         allowed_next_steps = [
             "read_source_or_diff_only",
@@ -201,7 +205,6 @@ def check_action(args: argparse.Namespace) -> dict:
     return {
         "ok": True,
         "contract_version": CONTRACT_VERSION,
-        "generated_at": datetime.now(timezone.utc).isoformat(),
         "decision": decision,
         "action": action,
         "source": args.source,
@@ -245,10 +248,10 @@ def manifest() -> dict:
             "provenance_evidence_not_trust",
             "review_requirement",
         ],
-        "entrypoint": "python3 docs/examples/agent_trust_skill.py check",
+        "entrypoint": "python3 -m agent_trust.skill check",
         "commands": {
-            "manifest": "python3 docs/examples/agent_trust_skill.py manifest",
-            "check_install_skill": "python3 docs/examples/agent_trust_skill.py check --action install_skill --source github --url <url> --requested-permission repo_read,read_env,network --warrant <why> --boundary <limits>",
+            "manifest": "python3 -m agent_trust.skill manifest",
+            "check_install_skill": "python3 -m agent_trust.skill check --action install_skill --source github --url <url> --requested-permission repo_read,read_env,network --warrant <why> --boundary <limits>",
         },
         "supported_actions": ["install_skill"],
         "decision_values": ["allow_with_constraints", "review_optional", "require_review", "deny_or_require_review"],

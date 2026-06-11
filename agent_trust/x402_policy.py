@@ -41,8 +41,12 @@ def quote_x402_policy(
         allowed = {str(item) for item in allowed_resources}
         resource_allowed = str(resource) in allowed if resource is not None else False
 
-    budget = _decimal_or_none(policy.get("budget") or policy.get("max_budget"))
-    spent = Decimal("0")
+    budget = _decimal_or_none(
+        policy.get("budget") or policy.get("max_budget") or policy.get("per_agent_budget_cap")
+    )
+    # Spend already declared on the policy counts alongside ledger entries;
+    # ignoring it silently understates spend and overstates remaining budget.
+    spent = _decimal_or_none(policy.get("spent")) or Decimal("0")
     for entry in ledger:
         amount = _decimal_or_none(entry.get("amount") if isinstance(entry, dict) else None)
         if amount is not None:

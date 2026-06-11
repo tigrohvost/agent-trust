@@ -23,6 +23,10 @@ class AgentTrustInputGuardError(ValueError):
     """Sanitized error for rejecting untrusted Agent Trust JSON input."""
 
 
+class AgentTrustContractVersionError(ValueError):
+    """Raised when a requested Agent Trust bundle contract version is unsupported."""
+
+
 def guard_agent_trust_json_text(raw: str | bytes) -> None:
     """Reject oversized untrusted Agent Trust JSON before parsing.
 
@@ -56,21 +60,26 @@ _SECRET_KEY_MARKERS = (
     "api_key",
     "apikey",
     "auth",
+    "authorization",
     "bearer",
     "credential",
+    "credentials",
     "mnemonic",
+    "passphrase",
     "password",
     "private_key",
     "secret",
     "seed",
     "token",
 )
+_SECRET_KEY_MARKER_PATTERNS = tuple(
+    re.compile(rf"(?:^|_){re.escape(marker)}(?:$|_|s$|s_)") for marker in _SECRET_KEY_MARKERS
+)
 _SECRET_VALUE_PATTERNS = (
     re.compile(r"-----BEGIN [A-Z0-9 ]*PRIVATE KEY-----.*?-----END [A-Z0-9 ]*PRIVATE KEY-----", re.IGNORECASE | re.DOTALL),
     re.compile(r"(?i)\b(?:sk|pk|rk|ghp|github_pat|xox[baprs]|ya29|AKIA)[-_A-Za-z0-9]{10,}\b"),
     re.compile(r"(?i)\b(?:bearer|token|api[_ -]?key|secret|password)\s*[:=]\s*[^\s,;]{8,}"),
     re.compile(r"(?i)\bbearer\s+[-_A-Za-z0-9.]{8,}\b"),
-    re.compile(r"(?i)\b(?:[a-z]+\s+){11,23}[a-z]+\b"),
 )
 _REDACTED_SECRET = "[REDACTED_SECRET]"
 _HOMOGLYPH_TRANSLATION = str.maketrans(
@@ -119,8 +128,13 @@ def normalize_agent_trust_text(value: Any) -> str:
 
 
 def _looks_like_secret_key(key: Any) -> bool:
+    """Match secret-shaped key names on whole `_`-separated tokens.
+
+    Substring matching is too eager here: it flags `author` via `auth` and
+    similar benign keys, destroying evidence value of the packet.
+    """
     normalized = normalize_agent_trust_text(key).lower().replace("-", "_").replace(" ", "_")
-    return any(marker in normalized for marker in _SECRET_KEY_MARKERS)
+    return any(pattern.search(normalized) for pattern in _SECRET_KEY_MARKER_PATTERNS)
 
 
 def _redact_secret_text(value: str) -> str:
@@ -149,7 +163,7 @@ def redact_agent_trust_packet(value: Any, *, parent_key: str | None = None) -> A
     if isinstance(value, tuple):
         return [redact_agent_trust_packet(item, parent_key=parent_key) for item in value]
     if isinstance(value, set):
-        return sorted(redact_agent_trust_packet(item, parent_key=parent_key) for item in value)
+        return sorted((redact_agent_trust_packet(item, parent_key=parent_key) for item in value), key=str)
     if isinstance(value, str):
         if parent_key is not None and _looks_like_secret_key(parent_key) and value.strip():
             return _REDACTED_SECRET
@@ -236,6 +250,20 @@ _ACCOUNT_RECOVERY_ATTESTATION_WORDS = (
 )
 
 
+def _contains_term(text: str, term: str) -> bool:
+    """Whole-term match for advisory detectors.
+
+    Bare substring matching makes short terms like "pr" fire inside unrelated
+    words ("provenance", "present"), turning the detectors into noise. Terms
+    containing word characters must stand on their own token boundaries
+    (underscore counts as a word character so env-var names like GITHUB_TOKEN
+    do not register as authority claims).
+    """
+    if re.search(r"[a-z0-9]", term):
+        return re.search(rf"(?<![a-z0-9_]){re.escape(term)}(?![a-z0-9_])", text) is not None
+    return term in text
+
+
 def _flatten_agent_trust_text(value: Any) -> str:
     """Return normalized text for local advisory detectors without exposing it."""
     if value is None:
@@ -261,9 +289,9 @@ def _detect_account_recovery_takeover(subjects: list[Any], intended_integration_
     raw prompt text or secret-shaped values.
     """
     combined = " ".join(_flatten_agent_trust_text(item) for item in [*subjects, intended_integration_context]).lower()
-    context_hits = sorted(word for word in _ACCOUNT_RECOVERY_CONTEXT_WORDS if word in combined)
-    state_change_hits = sorted(word for word in _ACCOUNT_RECOVERY_STATE_CHANGE_WORDS if word in combined)
-    attestation_hits = sorted(word for word in _ACCOUNT_RECOVERY_ATTESTATION_WORDS if word in combined)
+    context_hits = sorted(word for word in _ACCOUNT_RECOVERY_CONTEXT_WORDS if _contains_term(combined, word))
+    state_change_hits = sorted(word for word in _ACCOUNT_RECOVERY_STATE_CHANGE_WORDS if _contains_term(combined, word))
+    attestation_hits = sorted(word for word in _ACCOUNT_RECOVERY_ATTESTATION_WORDS if _contains_term(combined, word))
     email_shape_present = bool(re.search(r"\b[^\s@]+@[^\s@]+\.[^\s@]+\b", combined))
     username_shape_present = bool(re.search(r"(^|\s)@[a-z0-9_.-]{2,}\b", combined))
     active = bool(context_hits and state_change_hits and (attestation_hits or email_shape_present or username_shape_present))
@@ -358,12 +386,19 @@ def _detect_context_control_plane_injection(subjects: list[Any], intended_integr
     counts/classes and sanitized booleans; it never stores raw hostile text.
     """
     combined = " ".join(_flatten_agent_trust_text(item) for item in [*subjects, intended_integration_context]).lower()
-    surface_hits = sorted(word for word in _CONTEXT_CONTROL_SURFACE_WORDS if word in combined)
-    imperative_hits = sorted(word for word in _CONTEXT_CONTROL_IMPERATIVE_WORDS if word in combined)
-    authority_hits = sorted(word for word in _CONTEXT_AUTHORITY_WORDS if word in combined)
-    external_action_shape_present = bool(re.search(r"\b(?:https?://|curl\s+|wget\s+|bash\s+-c|python\s+-c|npm\s+install|pip\s+install)\b", combined))
-    secret_request_shape_present = any(word in combined for word in ("token", "api key", "private key", "password", "secret", "credential")) and any(word in combined for word in ("print", "send", "reveal", "paste", "upload", "exfiltrate"))
-    policy_override_shape_present = any(word in combined for word in ("ignore previous", "disregard", "override", "bypass", "disable safety", "highest priority", "must obey"))
+    surface_hits = sorted(word for word in _CONTEXT_CONTROL_SURFACE_WORDS if _contains_term(combined, word))
+    imperative_hits = sorted(word for word in _CONTEXT_CONTROL_IMPERATIVE_WORDS if _contains_term(combined, word))
+    authority_hits = sorted(word for word in _CONTEXT_AUTHORITY_WORDS if _contains_term(combined, word))
+    # A bare URL is descriptive evidence (homepages, discovery endpoints), not
+    # an instruction to act; only command-shaped text counts as external action.
+    external_action_shape_present = bool(re.search(r"(?:\bcurl\s+|\bwget\s+|\bbash\s+-c\b|\bpython\s+-c\b|\bnpm\s+install\b|\bpip\s+install\b|\bcurl\s+https?://)", combined))
+    secret_request_shape_present = bool(
+        re.search(
+            r"\b(?:print|send|reveal|paste|upload|exfiltrate|leak)\s+(?:[a-z0-9_'-]+\s+){0,2}?(?:token|api[ _-]?key|private[ _-]?key|password|secret|credential)s?\b",
+            combined,
+        )
+    )
+    policy_override_shape_present = any(_contains_term(combined, word) for word in ("ignore previous", "disregard", "override", "bypass", "disable safety", "highest priority", "must obey"))
     active = bool((surface_hits or authority_hits) and (imperative_hits or external_action_shape_present or secret_request_shape_present or policy_override_shape_present))
     severity = "HIGH" if active and (secret_request_shape_present or policy_override_shape_present) else "MEDIUM" if active else "LOW"
     recommendation = "deny_or_quarantine_untrusted_context_before_action" if active else "no_context_control_plane_injection_pattern_detected"
@@ -436,12 +471,16 @@ def _build_agent_trust_bundle(policy: dict[str, Any], ledger: list[dict[str, Any
     negotiated_contract_version = contract_version or AGENT_TRUST_BUNDLE_CONTRACT_VERSION
     if negotiated_contract_version not in SUPPORTED_AGENT_TRUST_BUNDLE_CONTRACT_VERSIONS:
         supported = ", ".join(SUPPORTED_AGENT_TRUST_BUNDLE_CONTRACT_VERSIONS)
-        raise ValueError(f"unsupported Agent Trust contract version: {negotiated_contract_version}; supported: {supported}")
+        raise AgentTrustContractVersionError(f"unsupported Agent Trust contract version: {negotiated_contract_version}; supported: {supported}")
     quote = quote_x402_policy(policy, ledger=ledger, resource=resource)
     provenance = _normalize_provenance_evidence(provenance_evidence)
     subjects = [] if tool_descriptor is None else tool_descriptor if isinstance(tool_descriptor, list) else [tool_descriptor]
     policy_context = _extract_context_control_subjects(policy)
-    detector_subjects = [*policy_context, provenance, *subjects]
+    # Detectors must see only caller-supplied material. Feeding them the
+    # normalized provenance envelope makes its own boilerplate ("provenance",
+    # "trust_boundary", ...) trip surface/authority terms on every input.
+    provenance_subjects = [] if provenance_evidence is None else provenance_evidence if isinstance(provenance_evidence, list) else [provenance_evidence]
+    detector_subjects = [*policy_context, *provenance_subjects, *subjects]
     account_recovery = _detect_account_recovery_takeover(detector_subjects, intended_integration_context)
     context_control = _detect_context_control_plane_injection(detector_subjects, intended_integration_context)
     findings = []
@@ -452,14 +491,18 @@ def _build_agent_trust_bundle(policy: dict[str, Any], ledger: list[dict[str, Any
         keys = {str(k).lower() for k in item}
         transport = str(item.get("transport") or "").lower()
         remote = transport in {"sse", "http", "https", "websocket"} or any(w in serialized for w in ("http://", "https://", "websocket"))
-        auth = any(k in keys for k in AUTH_KEYS) or any(w in serialized for w in ("api_key", "bearer", "token", "secret", "credential", "env"))
-        fs = (any(k in keys for k in FS_KEYS) or any(w in serialized for w in ("filesystem", "workspace", "delete", "write"))) and not item.get("read_only") is True
-        execution = any(k in keys for k in EXEC_KEYS) or any(w in serialized for w in ("shell", "subprocess", "exec", "docker", "command"))
-        score = (2 if remote else 0) + (2 if auth else 0) + (2 if fs else 0) + (3 if execution else 0) + (1 if any(w in serialized for w in DANGEROUS_WORDS if w not in {"filesystem"}) else 0)
+        auth = (
+            any(k in keys for k in AUTH_KEYS)
+            or any(_contains_term(serialized, w) for w in ("api_key", "bearer", "token", "secret", "credential"))
+            or bool(re.search(r"\b[a-z0-9_]+_(?:token|key|secret|password)s?\b", serialized))
+        )
+        fs = (any(k in keys for k in FS_KEYS) or any(_contains_term(serialized, w) for w in ("filesystem", "workspace", "delete", "write"))) and not item.get("read_only") is True
+        execution = any(k in keys for k in EXEC_KEYS) or any(_contains_term(serialized, w) for w in ("shell", "subprocess", "exec", "execute", "docker", "command"))
+        score = (2 if remote else 0) + (2 if auth else 0) + (2 if fs else 0) + (3 if execution else 0) + (1 if any(_contains_term(serialized, w) for w in DANGEROUS_WORDS if w not in {"filesystem"}) else 0)
         risk = "BLOCK" if execution and (remote or auth) else "HIGH" if score >= 5 else "MEDIUM" if score >= 2 else "LOW"
         max_risk = risk if RISK_ORDER[risk] > RISK_ORDER[max_risk] else max_risk
         raw_urls = sorted(set(re.findall(r'https?://[^\s"\'<>]+', serialized)))[:5]
-        findings.append({"name": redact_agent_trust_packet(item.get("name") or item.get("id") or item.get("url") or "unnamed-tool"), "kind": redact_agent_trust_packet(item.get("kind") or item.get("type") or "tool_or_mcp"), "risk": risk, "signals": {"remote_or_network": remote, "auth_or_secret_reference": auth, "filesystem_or_write_reach": fs, "execution_capability": execution, "dangerous_words": sorted(w for w in DANGEROUS_WORDS if w in serialized), "urls": [redact_agent_trust_packet(url) for url in raw_urls]}})
+        findings.append({"name": redact_agent_trust_packet(item.get("name") or item.get("id") or item.get("url") or "unnamed-tool"), "kind": redact_agent_trust_packet(item.get("kind") or item.get("type") or "tool_or_mcp"), "risk": risk, "signals": {"remote_or_network": remote, "auth_or_secret_reference": auth, "filesystem_or_write_reach": fs, "execution_capability": execution, "dangerous_words": sorted(w for w in DANGEROUS_WORDS if _contains_term(serialized, w)), "urls": [redact_agent_trust_packet(url) for url in raw_urls]}})
     if registered_tool_manifest is not None or loaded_tool_count > 0:
         findings.append({"name": "ouroboros-registered-tools", "kind": "local_registry_snapshot", "risk": "MEDIUM", "signals": {"loaded_tool_count": int(loaded_tool_count or 0), "manifest_available": bool(registered_tool_manifest)}})
         max_risk = "MEDIUM" if RISK_ORDER["MEDIUM"] > RISK_ORDER[max_risk] else max_risk
@@ -479,21 +522,25 @@ def _build_agent_trust_bundle(policy: dict[str, Any], ledger: list[dict[str, Any
         reasons.append("account_recovery_takeover_risk")
     if context_control.get("active"):
         reasons.append("context_control_plane_injection_risk")
-    verdict = "deny" if reasons else "review" if RISK_ORDER.get(risk["overall_risk"], 3) >= RISK_ORDER["MEDIUM"] or quote.get("resource_allowed") is None or not quote.get("resource") else "allow"
+    budget_exhausted = remaining is not None and remaining == 0
+    verdict = "deny" if reasons else "review" if RISK_ORDER.get(risk["overall_risk"], 3) >= RISK_ORDER["MEDIUM"] or quote.get("resource_allowed") is None or not quote.get("resource") or budget_exhausted else "allow"
     if verdict == "review" and not reasons:
         if RISK_ORDER.get(risk["overall_risk"], 3) >= RISK_ORDER["MEDIUM"]:
             reasons.append(f"tool_risk_{risk['overall_risk'].lower()}")
         if quote.get("resource_allowed") is None or not quote.get("resource"):
             reasons.append("resource_not_supplied")
+        if budget_exhausted:
+            reasons.append("agent_budget_exhausted")
     controls = ["network_calls_false", "wallet_access_false", "execution_false", f"x402_settlement:{quote.get('settlement')}"]
-    canonical_payload = {"policy_quote": quote, "tool_risk": risk, "provenance_evidence": provenance, "account_recovery_takeover_detector": account_recovery, "context_control_plane_detector": context_control, "verdict": verdict, "reasons": reasons, "controls": controls}
+    # The digest must be recomputable from the shipped bundle, so the canonical
+    # payload is redacted before hashing: hash exactly what the consumer sees.
+    canonical_payload = {"contract_version": negotiated_contract_version, "policy_quote": quote, "tool_risk": risk, "provenance_evidence": provenance, "account_recovery_takeover_detector": account_recovery, "context_control_plane_detector": context_control, "verdict": verdict, "reasons": reasons, "controls": controls}
     if intended_integration_context:
         canonical_payload["intended_integration_context"] = intended_integration_context
+    canonical_payload = redact_agent_trust_packet(canonical_payload)
     canonical = json.dumps(canonical_payload, sort_keys=True, ensure_ascii=False)
     digest = hashlib.sha256(canonical.encode("utf-8")).hexdigest()
-    bundle = {"bundle_id": f"agenttrust-{digest[:16]}", "contract_version": negotiated_contract_version, "supported_contract_versions": SUPPORTED_AGENT_TRUST_BUNDLE_CONTRACT_VERSIONS, "digest": digest, "verdict": verdict, "reasons": reasons, "controls": controls, "network_calls": False, "wallet_access": False, "execution": False, "settlement": quote.get("settlement"), "policy_quote": quote, "tool_risk": risk, "provenance_evidence": provenance, "account_recovery_takeover_detector": account_recovery, "context_control_plane_detector": context_control}
-    if intended_integration_context:
-        bundle["intended_integration_context"] = redact_agent_trust_packet(intended_integration_context)
+    bundle = {"bundle_id": f"agenttrust-{digest[:16]}", "supported_contract_versions": SUPPORTED_AGENT_TRUST_BUNDLE_CONTRACT_VERSIONS, "digest": digest, "digest_payload_fields": sorted(canonical_payload), "network_calls": False, "wallet_access": False, "execution": False, "settlement": quote.get("settlement"), **canonical_payload}
     return redact_agent_trust_packet(bundle)
 
 
