@@ -34,6 +34,13 @@ python3 examples/agent_trust_doctor.py
 - Schemas: `schemas/agent_trust_request.schema.json` and `schemas/agent_trust_bundle.schema.json`
 - Reviewer packet: `examples/agent_trust_review_packet.json`
 
+## Try it and report
+
+Ran the two-minute proof? Tell us what happened — especially wrong verdicts (a benign descriptor denied, a hostile one allowed) and what evidence your agent would need before relying on a bundle:
+
+- [File feedback](https://github.com/tigrohvost/agent-trust/issues/new?template=feedback.yml) (structured template, no secrets)
+- Longer review packet for framework/MCP developers: `docs/AGENT_TRUST_FEEDBACK.md`
+
 ## Safety boundary
 
 Agent Trust is advisory evidence, not a hosted enforcement service or compliance certificate. The checked-in proof path performs no network calls, no wallet access, no code execution of untrusted inputs, no signing, no payments, and no real-money action. Production use still needs a non-bypassable policy chokepoint.

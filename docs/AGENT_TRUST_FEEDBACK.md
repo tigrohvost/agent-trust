@@ -9,7 +9,7 @@ This is a feedback artifact only. Do not ask reviewers to share secrets, wallet 
 ```text
 Reviewer role:
 Project / framework / agent type:
-Primary integration path considered: direct Python import / local CLI / local HTTP / schemas only / other
+Primary integration path considered: direct Python import / local CLI / schemas only / other
 Contemplated action type: paid API / x402 resource / MCP server / local tool / remote tool / other
 Would this run before every action, only high-risk actions, or only manual review?
 ```

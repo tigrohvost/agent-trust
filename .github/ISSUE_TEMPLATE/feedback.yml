@@ -1,0 +1,68 @@
+name: Agent Trust feedback
+description: Report results of trying the two-minute proof, or tell us what evidence your agent would need before trusting a pre-action bundle.
+title: "[feedback] "
+labels: ["feedback"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for trying Agent Trust. This is a feedback artifact only — do **not** share secrets, wallet keys, API tokens, production credentials, or private data.
+
+        Fastest proof before filing:
+        ```bash
+        git clone https://github.com/tigrohvost/agent-trust.git
+        cd agent-trust && python3 -m pip install -e .
+        bash scripts/agent_trust_first_run.sh
+        ```
+  - type: dropdown
+    id: role
+    attributes:
+      label: Reviewer context
+      description: What best describes you / your project?
+      options:
+        - Agent framework developer
+        - MCP server / tooling developer
+        - Autonomous agent operator
+        - Security reviewer
+        - Other
+    validations:
+      required: true
+  - type: dropdown
+    id: proof
+    attributes:
+      label: Did the two-minute proof pass?
+      options:
+        - "Yes — all commands exited 0, doctor printed ok: true"
+        - "Partially — some commands worked"
+        - "No — it failed (paste output below)"
+        - "Did not run it"
+    validations:
+      required: true
+  - type: dropdown
+    id: verdict-usefulness
+    attributes:
+      label: Core validation question
+      description: Would the current Agent Trust Bundle output give your agent enough structured evidence to choose proceed / review / deny before a risky action?
+      options:
+        - "Yes"
+        - "Partially"
+        - "No"
+    validations:
+      required: true
+  - type: textarea
+    id: missing
+    attributes:
+      label: What is missing?
+      description: Exact fields, proofs, or signals the bundle would need before you would rely on it. Command output or a sample descriptor that produced a wrong verdict is ideal.
+      placeholder: |
+        e.g. "verdict was deny for a benign read-only tool: <descriptor JSON>"
+        e.g. "I would need a signed bundle / confidence score / SBOM field ..."
+    validations:
+      required: true
+  - type: textarea
+    id: integration
+    attributes:
+      label: Where would you put the gate?
+      description: Optional — which integration path fits your agent (Python import / CLI / schemas only), and which action class would you gate first?
+    validations:
+      required: false
