@@ -97,10 +97,10 @@ Use this if you want one JSON result showing whether the checked-in request, gol
 ## 6. Optional: check the installable skill boundary
 
 ```bash
-python3 examples/agent_trust_skill_installability_check.py
+python3 -m agent_trust.skill manifest --compact
 ```
 
-Use this when the next integration step is installing or approving an external agent skill, plugin, MCP server, or repo helper. The check is dependency-free and local-only: it proves the Agent Trust Skill manifest points to a usable entrypoint, supports `install_skill`, and emits ASBOM/review-only boundaries for a dangerous external skill install before any secrets, network, execution, wallets, payments, or outreach are authorized.
+Use this when the next integration step is installing or approving an external agent skill, plugin, MCP server, or repo helper. The command is dependency-free and local-only: it emits the Agent Trust Skill manifest (supported actions, decision values, hard boundaries) so an agent can confirm the review-only contract before any secrets, network, execution, wallets, payments, or outreach are authorized.
 
 ## 7. Optional: consumer-style integration decision
 
@@ -126,17 +126,7 @@ python3 examples/agent_trust_import.py
 
 Use this path if your agent is Python-native and you do not want a subprocess or local HTTP call.
 
-## 10. Optional: local HTTP/JSON
-
-Start the Ouroboros app/server normally, then run:
-
-```bash
-python3 examples/agent_trust_http_client.py
-```
-
-Use this path if your agent process wants a stable local JSON endpoint instead of importing the Python module directly.
-
-## 11. What to read next
+## 10. What to read next
 
 | If you now want to... | Go here |
 |---|---|

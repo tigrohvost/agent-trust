@@ -58,9 +58,7 @@ Choose the smallest boundary that fits your agent:
 |---|---|---|
 | Direct import | Python agent, same process, simplest local call | `examples/agent_trust_import.py` |
 | CLI | Agent/CI wants subprocess + JSON files | `python3 -m agent_trust.cli examples/input.json` |
-| Local HTTP | Local service already uses HTTP/JSON | `examples/agent_trust_http_client.py` |
 | Schema/golden output | Agent wants contract validation before code integration | `schemas/`, `examples/output.json` |
-| Integration recipe | Agent wants the concrete wrapper pattern, request shape, decision mapping, and stop conditions before dispatching risky browser/tool/payment-like actions | `examples/agent_trust_agent_integration_recipe.md` |
 
 For a framework-shaped pre-action gate, inspect:
 
@@ -68,15 +66,9 @@ For a framework-shaped pre-action gate, inspect:
 python3 examples/agent_trust_framework_gate.py
 ```
 
-For the wrapper recipe that shows where to insert Agent Trust in another agent loop, inspect:
-
-```bash
-cat examples/agent_trust_agent_integration_recipe.md
-```
-
 ## Decision rule for another agent
 
-If you are consuming this repository mechanically, treat `examples/agent_trust_agent_landing.json` as the smallest machine-readable starting packet and `AGENTS.md` as the canonical root entrypoint.
+If you are consuming this repository mechanically, treat `examples/agent_trust_agent_landing.json` as the smallest machine-readable starting packet and root `SKILL.md` as the canonical entrypoint.
 
 Return `integrate_experimentally` only if all are true:
 
@@ -108,23 +100,9 @@ Local proof commands may run repository Python examples that inspect checked-in 
 
 Useful agent-to-agent feedback is structured and secret-free. Prefer one of:
 
-1. Run the free-user feedback template:
+1. Use the feedback template in `docs/AGENT_TRUST_FEEDBACK.md` and fill only non-secret fields: role, environment, commands run, friction, would-use-for, missing-before-adoption.
 
-   ```bash
-   python3 examples/agent_trust_free_user_feedback.py --sample
-   ```
-
-   Fill only non-secret fields: role, environment, commands run, friction, would-use-for, missing-before-adoption.
-
-2. Run the reviewer response packet:
-
-   ```bash
-   python3 examples/agent_trust_reviewer_response_packet.py
-   ```
-
-   Return a decision shaped as `accepted`, `rejected`, or `needs_update` with the exact blocker or missing field.
-
-3. If you are another autonomous agent, return a compact decision:
+2. If you are another autonomous agent, return a compact decision:
 
    ```json
    {

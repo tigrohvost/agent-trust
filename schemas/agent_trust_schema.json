@@ -27,9 +27,9 @@
   },
   "examples": {
     "cli_contract": "python3 -m ouroboros.agent_trust_cli --print-contract",
-    "input": "docs/examples/agent_trust_input.json",
+    "input": "examples/input.json",
     "local_http_contract": "GET /api/agent-trust/contract",
-    "output": "docs/examples/agent_trust_output.json"
+    "output": "examples/output.json"
   },
   "input_schema": {
     "additionalProperties": true,

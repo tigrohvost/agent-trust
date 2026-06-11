@@ -120,7 +120,7 @@ python3 -m agent_trust.cli --print-contract
 
 The contract JSON includes the safety boundary, current/supported Agent Trust Bundle contract versions, required/optional input fields, expected output fields, error envelope shape, exit-code semantics, and example commands. This lets another agent inspect the interface before deciding whether to call it.
 
-For consumers that prefer checked-in files over live discovery, `examples/agent_trust_schema.json` provides a concise schema-like overview, while `schemas/agent_trust_request.schema.json` and `schemas/agent_trust_bundle.schema.json` provide draft-2020-12 JSON Schemas for the request and emitted trust bundle.
+For consumers that prefer checked-in files over live discovery, `schemas/agent_trust_schema.json` provides a concise schema-like overview, while `schemas/agent_trust_request.schema.json` and `schemas/agent_trust_bundle.schema.json` provide draft-2020-12 JSON Schemas for the request and emitted trust bundle.
 
 ## Build a versioned request JSON
 
@@ -166,47 +166,8 @@ The CLI can also read the same JSON contract from stdin. Consumers may request t
 cat examples/input.json | python3 -m agent_trust.cli --input -
 ```
 
-For compatibility, the older demo wrapper still works:
-
-```bash
-python3 scripts/agent_trust_demo.py examples/input.json
-```
-
 The command only reads local JSON and calls the local trust-bundle builder. It does not call the network, access wallets, execute tools, or use real payment credentials. Successful output is deterministic JSON containing `bundle_id`, `verdict`, `reasons`, `controls`, `policy_quote`, and `tool_risk`; ordinary invalid inputs return a JSON error envelope instead of a traceback.
 
-
-## Local HTTP/JSON surface
-
-For local integrations that prefer HTTP over shell invocation, Ouroboros exposes the same deterministic Agent Trust Bundle contract through the local Starlette server:
-
-```bash
-curl http://127.0.0.1:8765/api/agent-trust/contract
-```
-
-The contract response describes the local safety boundary, endpoint paths, required and optional input fields, output fields, and JSON error envelope. To build a bundle from the same JSON input used by the CLI:
-
-```bash
-curl -s \
-  -H 'Content-Type: application/json' \
-  --data @examples/input.json \
-  http://127.0.0.1:8765/api/agent-trust/bundle
-```
-
-A copy-pasteable standard-library Python client example is also included for integrators who want a tiny end-to-end request/decision pattern instead of raw `curl`:
-
-```bash
-python3 examples/agent_trust_http_client.py
-```
-
-It loads `examples/input.json`, posts to the local bundle endpoint, prints the full JSON bundle, and emits a compact decision summary containing `verdict`, `reasons`, and `controls`. Pass an input path and endpoint URL as optional arguments if your local server address differs.
-
-The POST body may include `"contract_version": "agent-trust-bundle-v1"` to request an explicit supported bundle schema. Unsupported versions return HTTP 400 with `unsupported_agent_trust_contract_version`, the requested version, and the supported version list. Invalid input returns HTTP 400 with the same machine-readable error shape used by the CLI:
-
-```json
-{"error": {"code": "invalid_agent_trust_input", "message": "input requires object field: policy"}}
-```
-
-The HTTP surface is still local-only and does not call the network, access wallets, execute supplied tool descriptors, or touch real payment credentials. It is an integration seam for agents running beside this local process, not a hosted service.
 
 ## Early validation ask
 

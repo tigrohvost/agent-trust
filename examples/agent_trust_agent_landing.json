@@ -10,21 +10,17 @@
       "review_only": true
     },
     "coverage": "Covers all 12 grouped skill-library backlog boundaries and links each matched boundary to its local metadata-first contract artifact under state/skill_library_analysis/.",
-    "demo_command": "python3 examples/agent_trust_boundary_intake.py --demo",
-    "entrypoint": "examples/agent_trust_boundary_intake.py",
     "expected_demo_signals": [
       "contract_version=agent-trust-boundary-intake-v1",
       "verdict=quarantine for the built-in risky MCP skill demo",
       "matched_boundaries includes dependency_firewall, external_action, scanner_execution, and web_api_appsec style signals when described by the demo",
       "hard stops preserve no network, no execution, no secret reads/disclosure, no wallets/signing/payment, and no outreach/posting/external action"
     ],
-    "file_command_shape": "python3 examples/agent_trust_boundary_intake.py --file path/to/descriptor.json",
     "input": "JSON descriptor or raw text describing the candidate artifact/action and requested authority.",
     "output": "JSON review packet with contract_version, verdict, matched_boundaries, contract_artifact pointers for matched backlog contracts, controls, reasons, packet_id, digest, trust_boundary label, and top-level hard-stop booleans such as network_calls=false, execution=false, secret_values_read=false, wallet_access=false, external_action=false.",
     "purpose": "Discoverable pre-action classifier for local descriptors before using agent skills, MCP servers, repositories, web/API artifacts, scanners, execution paths, secrets, cloud/control-plane authority, OSINT/CTI, malware/reversing, OT/ICS, or incident-recovery workflows.",
     "python_api": "from agent_trust.bundle_boundaries import classify_agent_trust_boundaries",
     "python_catalog_api": "from agent_trust.bundle_boundaries import agent_trust_boundary_catalog",
-    "stdin_command_shape": "printf %s \"$DESCRIPTOR_JSON\" | python3 examples/agent_trust_boundary_intake.py",
     "use_before": [
       "installing or enabling an external agent skill, MCP server, plugin, or repo helper",
       "granting a tool/web/API/scanner/execution path broader authority",
@@ -65,12 +61,12 @@
       "asbom.provenance_evidence_not_trust=true",
       "review-only boundary preserved"
     ],
-    "installability_self_check_command": "python3 examples/agent_trust_skill_installability_check.py",
-    "landing_doc": "docs/AGENT_TRUST_SKILL.md",
-    "machine_readable_manifest": "examples/agent_trust_skill_manifest.json",
-    "minimal_install_skill_check_command": "python3 examples/agent_trust_skill.py check --action install_skill --source github --url https://github.com/example/pr-review-helper --requested-permission repo_read,read_env,network --warrant \"summarize current PR only\" --boundary \"no secrets, no external upload, no credential access\"",
+    "installability_self_check_command": "python3 examples/agent_trust_doctor.py",
+    "landing_doc": "docs/AGENT_TRUST_FOR_AGENTS.md",
+    "machine_readable_manifest": "examples/skill_manifest.json",
+    "minimal_install_skill_check_command": "python3 agent_trust/skill.py check --action install_skill --source github --url https://github.com/example/pr-review-helper --requested-permission repo_read,read_env,network --warrant \"summarize current PR only\" --boundary \"no secrets, no external upload, no credential access\"",
     "purpose": "One-hop install/use/verify packet for Codex, Claude, OpenClaw, Hermes, and similar agents before using Agent Trust Skill.",
-    "skill_entrypoint": "examples/agent_trust_skill.py"
+    "skill_entrypoint": "agent_trust/skill.py"
   },
   "agent_trust_zero_trust_identity_policy_capability": {
     "boundary": {
@@ -110,11 +106,9 @@
         "refused_actions",
         "boundary_intake"
       ],
-      "run": "python3 examples/agent_trust_external_skill_gate.py --demo --compact",
       "what_it_does": "Turns an external skill/MCP/plugin/repo descriptor into a local pre-action review packet before any use."
     },
     {
-      "command": "python3 examples/agent_trust_external_skill_gate.py --demo --compact",
       "input": "External skill/MCP/plugin/repo descriptor JSON or --demo synthetic descriptor.",
       "name": "external_skill_gate",
       "output": "Local review packet with pre_action_decision, refused_actions, and boundary evidence.",
@@ -129,7 +123,6 @@
     }
   ],
   "first_reviewer_client_ask": {
-    "ask_packet": "docs/AGENT_TRUST_FIRST_REVIEWER_CLIENT_ASK.md",
     "boundary": {
       "local_only": true,
       "no_network_calls": true,
@@ -140,7 +133,6 @@
       "no_wallet_or_signing": true,
       "unsent": true
     },
-    "decision_packet": "docs/AGENT_TRUST_FIRST_PILOT_REVIEW_PACKET.md",
     "expected_proof_signals": [
       "exit_code=0",
       "ok=true",
@@ -148,7 +140,6 @@
       "expected_reviewer_decision=review_accept"
     ],
     "purpose": "Shortest local unsent first-reviewer/client ask surface after the one-hop landing packet and proof path are understood.",
-    "required_proof_command": "python3 examples/agent_trust_reviewer_decision_dry_run.py",
     "reviewer_decision_shape": "accept_for_first_review | needs_changes | reject"
   },
   "hard_stops": [
@@ -192,7 +183,7 @@
     },
     {
       "kind": "agent_trust_skill_manifest",
-      "path": "examples/agent_trust_skill_manifest.json",
+      "path": "examples/skill_manifest.json",
       "use": "One-hop install/use/verify contract for Agent Trust Skill, including installability self-check and minimal install_skill pre-action check."
     }
   ],
@@ -205,10 +196,7 @@
       "cmd": "python3 examples/agent_trust_doctor.py",
       "expected_signal": "no failed local consistency checks"
     },
-    {
-      "cmd": "python3 examples/agent_trust_reviewer_decision_dry_run.py",
-      "expected_signal": "ok=true and decision=proceed_to_first_reviewer_decision_packet before using docs/AGENT_TRUST_FIRST_REVIEWER_CLIENT_ASK.md"
-    }
+    {}
   ],
   "optional_full_proof_command": {
     "cmd": "bash scripts/agent_trust_first_run.sh",
@@ -219,7 +207,6 @@
   "structured_feedback_shape": {
     "agent_trust_decision": "integrate_experimentally | abstain",
     "commands_run": [],
-    "first_blocker": null,
     "intended_integration_context": "where Agent Trust would sit before a risky action",
     "missing_before_adoption": []
   }

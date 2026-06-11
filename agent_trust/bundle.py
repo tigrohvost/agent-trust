@@ -9,6 +9,7 @@ import re
 import unicodedata
 from typing import Any
 
+from agent_trust.bip39_english import BIP39_ENGLISH_WORDS
 from agent_trust.tool_risk import AUTH_KEYS, DANGEROUS_WORDS, EXEC_KEYS, FS_KEYS, NETWORK_KEYS, RISK_ORDER
 from agent_trust.x402_policy import quote_x402_policy
 
@@ -137,6 +138,36 @@ def _looks_like_secret_key(key: Any) -> bool:
     return any(pattern.search(normalized) for pattern in _SECRET_KEY_MARKER_PATTERNS)
 
 
+_MNEMONIC_MIN_RUN = 12
+_MNEMONIC_TOKEN_RE = re.compile(r"[A-Za-z]+")
+
+
+def _redact_bip39_mnemonics(text: str) -> str:
+    """Redact runs of 12+ consecutive whitespace-separated BIP-39 words.
+
+    Replaces the earlier "any 12-24 lowercase words" heuristic, which erased
+    ordinary sentences. BIP-39 deliberately omits common function words, so a
+    12-word run drawn entirely from the wordlist is secret-shaped, while
+    natural prose breaks the run almost immediately.
+    """
+    runs: list[tuple[int, int]] = []
+    current: list[re.Match[str]] = []
+    for token in _MNEMONIC_TOKEN_RE.finditer(text):
+        in_list = token.group(0).lower() in BIP39_ENGLISH_WORDS
+        contiguous = not current or text[current[-1].end() : token.start()].strip() == ""
+        if in_list and contiguous:
+            current.append(token)
+            continue
+        if len(current) >= _MNEMONIC_MIN_RUN:
+            runs.append((current[0].start(), current[-1].end()))
+        current = [token] if in_list else []
+    if len(current) >= _MNEMONIC_MIN_RUN:
+        runs.append((current[0].start(), current[-1].end()))
+    for start, end in reversed(runs):
+        text = text[:start] + _REDACTED_SECRET + text[end:]
+    return text
+
+
 def _redact_secret_text(value: str) -> str:
     redacted = value
     normalized = normalize_agent_trust_text(value)
@@ -144,6 +175,11 @@ def _redact_secret_text(value: str) -> str:
         redacted = pattern.sub(_REDACTED_SECRET, redacted)
         if redacted == value and pattern.search(normalized):
             return _REDACTED_SECRET
+    mnemonic_redacted = _redact_bip39_mnemonics(redacted)
+    if mnemonic_redacted != redacted:
+        redacted = mnemonic_redacted
+    elif _redact_bip39_mnemonics(normalized) != normalized:
+        return _REDACTED_SECRET
     redacted = re.sub(r"(?i)(https?://)([^/@\s:]{3,}:[^/@\s]{3,}@)", r"\1[REDACTED_USERINFO]@", redacted)
     return redacted
 

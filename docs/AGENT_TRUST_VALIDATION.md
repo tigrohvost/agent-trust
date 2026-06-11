@@ -36,12 +36,6 @@ For Python integration without a subprocess:
 python3 examples/agent_trust_import.py
 ```
 
-For local HTTP/JSON integration when the Ouroboros server is already running:
-
-```bash
-python3 examples/agent_trust_http_client.py
-```
-
 ## Validation ask
 
 For structured responses, use the [Agent Trust feedback template](AGENT_TRUST_FEEDBACK.md).

@@ -12,7 +12,6 @@ Every path below keeps the same local MVP boundary:
 - no real payments or payment credentials;
 - deterministic JSON output for the same input.
 
-The local HTTP client example contacts only `127.0.0.1` and assumes the Ouroboros server is already running.
 
 ## Choose your path
 
@@ -20,7 +19,6 @@ The local HTTP client example contacts only `127.0.0.1` and assumes the Ouroboro
 |---------------|------------|-----|----------------------|
 | A Python agent running in the same process | **Direct Python import** | Smallest integration: no subprocess, no local HTTP hop. | `python3 examples/agent_trust_import.py` |
 | A shell-based agent, CI job, or non-Python prototype | **Local CLI** | Stable JSON stdin/file interface with machine-readable errors and contract discovery. | `python3 -m agent_trust.cli --input examples/input.json` |
-| A local service or agent runtime that prefers HTTP | **Local HTTP/JSON** | Same bundle contract behind local endpoints, easy to call from any language. | `python3 examples/agent_trust_http_client.py` |
 | An agent validating compatibility before integration | **Checked-in schemas/examples** | Validate request/output shape without reading source or starting the app. | `schemas/agent_trust_request.schema.json` and `examples/output.json` |
 
 ## Minimal decision flow
@@ -64,20 +62,6 @@ python3 -m agent_trust.cli --print-contract
 
 Best for: shell agents, CI checks, language-agnostic prototypes, and simple subprocess integrations.
 
-### 3. Local HTTP/JSON
-
-Use this when your local runtime already talks HTTP between components.
-
-```bash
-python3 examples/agent_trust_http_client.py
-```
-
-Contract discovery endpoint:
-
-```text
-GET http://127.0.0.1:8765/api/agent-trust/contract
-```
-
 Bundle endpoint:
 
 ```text
@@ -92,7 +76,7 @@ Use these before wiring code, or inside your own compatibility tests:
 
 - `examples/input.json` — canonical sample request.
 - `examples/output.json` — deterministic golden output for the sample request.
-- `examples/agent_trust_schema.json` — compact schema-like overview.
+- `schemas/agent_trust_schema.json` — compact schema-like overview.
 - `schemas/agent_trust_request.schema.json` — draft-2020-12 request schema.
 - `schemas/agent_trust_bundle.schema.json` — draft-2020-12 output schema.
 

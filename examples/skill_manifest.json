@@ -1,6 +1,6 @@
 {
   "name": "Agent Trust Skill",
-  "version": "4.4.613",
+  "version": "0.2.0",
   "purpose": "Local pre-action gate for AI agents before installing or enabling an external skill/plugin/MCP helper/repo dependency.",
   "entrypoint": "python3 -m agent_trust.skill",
   "supported_actions": [

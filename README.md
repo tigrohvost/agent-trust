@@ -160,6 +160,7 @@ A bundle includes:
 - `policy_quote`: local x402-style budget/resource policy quote
 - `tool_risk`: risk signals for tools/MCP/skills/helpers
 - `provenance_evidence`: discovery/identity evidence, explicitly not treated as authorization
+- `digest` + `digest_payload_fields`: SHA-256 over the canonical redacted payload, recomputable by the consumer from the shipped bundle
 - side-effect flags: `network_calls=false`, `wallet_access=false`, `execution=false`
 
 ## Typical use cases
@@ -338,6 +339,7 @@ pytest -q
 - `policy_quote`: локальная x402-style оценка бюджета/ресурса
 - `tool_risk`: признаки риска tool/MCP/skill/helper
 - `provenance_evidence`: evidence происхождения/идентичности, но не авторизация
+- `digest` + `digest_payload_fields`: SHA-256 канонического redacted payload; потребитель может пересчитать digest из самого bundle
 - флаги побочных эффектов: `network_calls=false`, `wallet_access=false`, `execution=false`
 
 ## Модель безопасности

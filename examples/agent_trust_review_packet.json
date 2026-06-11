@@ -36,36 +36,11 @@
       "why_it_matters": "One command emits the reviewer-facing local evidence transcript, including doctor, adoption, daily-review, and loopback readiness summaries without external action."
     },
     {
-      "name": "reviewer_response_packet",
-      "path": "examples/agent_trust_reviewer_response_packet.py",
-      "why_it_matters": "Turns local reviewer evidence into an explicit accepted/rejected/needs_update response so the next product move is based on a structured reviewer signal, not vague interest."
-    },
-    {
       "name": "consumer_decision",
       "path": "examples/agent_trust_consumer_decision.py",
       "why_it_matters": "Shows how another local agent can combine manifest, review packet, and doctor output into an integrate/abstain decision."
     },
-    "examples/agent_trust_review_decision_gate.py",
-    {
-      "name": "integration_ticket",
-      "path": "examples/agent_trust_integration_ticket.py",
-      "why_it_matters": "Turns local proof into a reviewer-usable first integration ticket with acceptance criteria, questions, and stop conditions."
-    },
-    {
-      "name": "loopback_readiness",
-      "path": "examples/agent_trust_loopback_readiness.py",
-      "why_it_matters": "Lets a first reviewer or agent reproduce the dedicated 8766-style path locally while preserving no hosted/public availability claim."
-    },
-    {
-      "name": "at_fw_001_reviewer_packet",
-      "path": "docs/AGENT_TRUST_AT_FW_001_REVIEWER_PACKET.md",
-      "why_it_matters": "Turns the filled framework dossier and unsent draft gate into a deterministic integrate/abstain/revise reviewer signal without outreach, network exposure, wallets, signing, payment, secrets, or repository settings changes."
-    },
-    {
-      "name": "first_pilot_review_check",
-      "path": "examples/agent_trust_first_pilot_review_check.py",
-      "why_it_matters": "Gives a first reviewer one local JSON verdict that the reviewer response and provenance decision gate are coherent, review-only, and do not authorize external actions."
-    }
+    "examples/agent_trust_review_decision_gate.py"
   ],
   "contract_version": "agent-trust-bundle-v1",
   "integration_paths": [
@@ -81,7 +56,6 @@
     },
     {
       "best_for": "Local services that already communicate over HTTP/JSON.",
-      "entrypoint": "examples/agent_trust_http_client.py",
       "name": "local_http_json"
     },
     {
@@ -116,7 +90,6 @@
       "expected_signal": "decision is integrate_experimentally when manifest, review packet, safety boundary, and doctor checks are coherent."
     },
     {
-      "command": "python3 examples/agent_trust_daily_review.py",
       "proves": "Daily Agent Trust security-and-progress checkpoint passes local release-state, doctor, and Base Sepolia dry-run boundary checks."
     },
     {
@@ -128,23 +101,18 @@
       "description": "Review sanitized scanner evidence ingestion and deny/review mapping without executing scanners."
     },
     {
-      "command": "python3 examples/agent_trust_agent_security_evidence.py",
       "description": "Review sanitized agent-security evidence ingestion and task-warrant review/deny mapping without external action."
     },
     {
-      "command": "python3 examples/agent_trust_integration_ticket.py",
       "expected_signal": "ok=true, status=ready_for_local_review_only, and no outreach/network/wallet/signing/payment/real-money flags are enabled."
     },
     {
-      "command": "python3 examples/agent_trust_loopback_readiness.py",
       "expected_signal": "decision is loopback_ready_for_controlled_edge_prep; the dedicated Agent Trust MVP runs only on 127.0.0.1, allowlisted discovery/contract/bundle paths return 200, forbidden control-console paths return 404, and no hosted availability, port opening, wallet, signing, payment, real-money, or outreach action occurs."
     },
     {
-      "command": "python3 examples/agent_trust_reviewer_response_packet.py",
       "expected_signal": "ok=true, response_packet_valid=true, reviewer_response.decision is accepted/rejected/needs_update, and authorized_next_step remains local-only while posting/outreach/account/wallet/signing/network/payment/real-money actions stay unauthorized."
     },
     {
-      "command": "python3 examples/agent_trust_first_pilot_review_check.py",
       "expected_signal": "ok=true, decision=first_pilot_review_path_ready, provenance classification is provenance_evidence_not_trust, and tool/MCP/API/wallet/signing/payment/outreach remain unauthorized."
     }
   ],

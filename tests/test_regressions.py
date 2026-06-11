@@ -138,3 +138,16 @@ def test_skill_readonly_without_warrant_requires_review():
     )
     verdict = json.loads(completed.stdout)
     assert verdict["decision"] == "require_review"
+
+
+def test_bip39_mnemonic_is_redacted():
+    phrase = "legal winner thank year wave sausage worth useful legal winner thank yellow"
+    packet = {"note": f"backup phrase: {phrase}"}
+    redacted = redact_agent_trust_packet(packet)
+    assert phrase not in json.dumps(redacted)
+    assert "[REDACTED_SECRET]" in redacted["note"]
+
+
+def test_bip39_redaction_spares_prose_with_scattered_wordlist_words():
+    prose = "the actual budget review will cover all major topics again during this useful session"
+    assert redact_agent_trust_packet(prose) == prose

@@ -52,7 +52,6 @@ From the repository root:
 
 ```bash
 python3 examples/agent_trust_evidence_transcript.py
-python3 examples/agent_trust_reviewer_response_packet.py
 ```
 
 Optional consistency check:
