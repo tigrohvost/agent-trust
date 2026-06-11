@@ -1,36 +1,78 @@
 {
-  "bundle_id": "agenttrust-f30af7e2d11ed4d2",
+  "account_recovery_takeover_detector": {
+    "active": false,
+    "attestation_version": "account-recovery-takeover-detector-v1",
+    "execution": false,
+    "matched_signal_classes": {
+      "attestation_or_target": [],
+      "context": [],
+      "state_change": []
+    },
+    "network_calls": false,
+    "recommendation": "no_account_recovery_takeover_pattern_detected",
+    "risk": "none_detected",
+    "severity": "LOW",
+    "signals": {
+      "attestation_hit_count": 0,
+      "context_hit_count": 0,
+      "email_shape_present": false,
+      "state_change_hit_count": 0,
+      "username_shape_present": false
+    },
+    "wallet_access": false,
+    "warning": "Advisory detector for account-recovery/support state changes; not authorization proof, compliance certification, or a substitute for a non-bypassable policy chokepoint."
+  },
+  "bundle_id": "agenttrust-8c3a401a3339cb1b",
+  "context_control_plane_detector": {
+    "active": true,
+    "attestation_version": "context-control-plane-detector-v1",
+    "execution": false,
+    "matched_signal_classes": {
+      "authority_claims": [],
+      "imperatives": [],
+      "surfaces": [
+        "mcp",
+        "pr"
+      ]
+    },
+    "network_calls": false,
+    "recommendation": "deny_or_quarantine_untrusted_context_before_action",
+    "risk": "untrusted_context_attempts_agent_control",
+    "severity": "MEDIUM",
+    "signals": {
+      "authority_hit_count": 0,
+      "external_action_shape_present": true,
+      "imperative_hit_count": 0,
+      "policy_override_shape_present": false,
+      "secret_request_shape_present": false,
+      "surface_hit_count": 2
+    },
+    "wallet_access": false,
+    "warning": "Advisory ASAMM-inspired detector for untrusted context acting as a control plane; not a production sandbox, authorization proof, or compliance certification."
+  },
   "contract_version": "agent-trust-bundle-v1",
   "controls": [
     "network_calls_false",
     "wallet_access_false",
     "execution_false",
-    "x402_settlement:mock-local-no-money-policy"
+    "x402_settlement:local_no_wallet_no_payment"
   ],
-  "digest": "f30af7e2d11ed4d2adf1dae81d999442bbbba5070ee70213ddb78cf08808060b",
+  "digest": "8c3a401a3339cb1b6eefc6dbb9aeb7f133eeabbe80151567902a0ed38ab74f5b",
   "execution": false,
   "intended_integration_context": "agent_framework_pre_action_gate_before_mcp_tool_or_paid_api_call",
   "network_calls": false,
   "policy_quote": {
-    "agent_budget": null,
-    "agent_id": "demo-agent",
-    "allowed_resources": [
-      "https://api.example.test/report"
-    ],
-    "max_amount": null,
+    "budget": null,
+    "network_calls": false,
+    "payment_submitted": false,
     "policy_version": "x402-policy-v1",
-    "quote_id": "fa1d3f2053aa3ec74f944c12d0e3ec335f1be7102155f1cc9db190d95f489da6",
+    "real_money": false,
     "remaining_budget": null,
-    "requirements": [
-      "payment_id_required",
-      "resource_allowlisted",
-      "amount_within_request_cap",
-      "amount_within_agent_budget",
-      "no_conflicting_replay"
-    ],
     "resource": "https://api.example.test/report",
     "resource_allowed": true,
-    "settlement": "mock-local-no-money-policy"
+    "settlement": "local_no_wallet_no_payment",
+    "spent": "0.25",
+    "wallet_access": false
   },
   "provenance_evidence": {
     "attestation_version": "provenance-evidence-v1",
@@ -60,9 +102,9 @@
     "trust_boundary": "Discovery and identity provenance is evidence only; it is not authorization, trust, or permission to act without policy and warrant evaluation."
   },
   "reasons": [
-    "tool_risk_high"
+    "context_control_plane_injection_risk"
   ],
-  "settlement": "mock-local-no-money-policy",
+  "settlement": "local_no_wallet_no_payment",
   "supported_contract_versions": [
     "agent-trust-bundle-v1"
   ],
@@ -90,6 +132,6 @@
     "network_calls": false,
     "overall_risk": "HIGH"
   },
-  "verdict": "review",
+  "verdict": "deny",
   "wallet_access": false
 }

@@ -13,8 +13,13 @@ from pathlib import Path
 
 from agent_trust.bundle import (
     AGENT_TRUST_BUNDLE_CONTRACT_VERSION,
+    AGENT_TRUST_MAX_JSON_INPUT_BYTES,
+    AGENT_TRUST_MAX_JSON_NESTING_DEPTH,
     SUPPORTED_AGENT_TRUST_BUNDLE_CONTRACT_VERSIONS,
+    AgentTrustInputGuardError,
     build_agent_trust_bundle,
+    guard_agent_trust_json_depth,
+    guard_agent_trust_json_text,
 )
 
 
@@ -36,6 +41,11 @@ AGENT_TRUST_CLI_CONTRACT = {
     },
     "input": {
         "format": "json_object",
+        "guardrails": {
+            "max_input_bytes": AGENT_TRUST_MAX_JSON_INPUT_BYTES,
+            "max_nesting_depth": AGENT_TRUST_MAX_JSON_NESTING_DEPTH,
+            "failure_mode": "reject_with_sanitized_error_before_bundle_processing",
+        },
         "fields": {
             "policy": {"required": True, "type": "object"},
             "ledger": {"required": False, "type": "array"},
@@ -63,6 +73,8 @@ AGENT_TRUST_CLI_CONTRACT = {
             "tool_risk",
             "intended_integration_context",
             "provenance_evidence",
+            "account_recovery_takeover_detector",
+            "context_control_plane_detector",
         ],
     },
     "error_envelope": {
@@ -74,14 +86,14 @@ AGENT_TRUST_CLI_CONTRACT = {
         "2": "invalid input JSON, unsupported contract version, missing required fields, or input read error",
     },
     "examples": [
-        "python3 -m ouroboros.agent_trust_cli --print-contract",
-        "python3 -m ouroboros.agent_trust_cli --input examples/input.json",
-        "python3 -m ouroboros.agent_trust_cli --contract-version agent-trust-bundle-v1 --input examples/input.json",
-        "cat examples/input.json | python3 -m ouroboros.agent_trust_cli --input -",
+        "python3 -m agent_trust.cli --print-contract",
+        "python3 -m agent_trust.cli --input examples/input.json",
+        "python3 -m agent_trust.cli --contract-version agent-trust-bundle-v1 --input examples/input.json",
+        "cat examples/input.json | python3 -m agent_trust.cli --input -",
     ],
 }
 
-def main() -> int:
+if __name__ == "__main__":
     parser = argparse.ArgumentParser(
         description="Build a local no-network/no-wallet/no-execution Agent Trust Bundle.",
     )
@@ -113,8 +125,20 @@ def main() -> int:
     input_path = args.input_path if args.input_path is not None else args.input_arg
 
     try:
-        raw = sys.stdin.read() if input_path in {None, "-"} else Path(input_path).read_text(encoding="utf-8")
+        if input_path in {None, "-"}:
+            raw = sys.stdin.read(AGENT_TRUST_MAX_JSON_INPUT_BYTES + 1)
+        else:
+            path = Path(input_path)
+            size = path.stat().st_size
+            if size > AGENT_TRUST_MAX_JSON_INPUT_BYTES:
+                raise AgentTrustInputGuardError(
+                    "Agent Trust input exceeds JSON size limit "
+                    f"({size} bytes > {AGENT_TRUST_MAX_JSON_INPUT_BYTES} bytes)"
+                )
+            raw = path.read_text(encoding="utf-8")
+        guard_agent_trust_json_text(raw)
         data = json.loads(raw)
+        guard_agent_trust_json_depth(data)
         if not isinstance(data, dict):
             raise ValueError("input must be a JSON object")
         if not isinstance(data.get("policy"), dict):
@@ -141,7 +165,7 @@ def main() -> int:
             )
             raise SystemExit(2)
         print(json.dumps(bundle, sort_keys=True, indent=2, ensure_ascii=False))
-    except (OSError, json.JSONDecodeError, ValueError) as exc:
+    except (OSError, json.JSONDecodeError, ValueError, RecursionError) as exc:
         print(
             json.dumps(
                 {"error": {"code": "invalid_agent_trust_input", "message": str(exc)}},
@@ -151,7 +175,3 @@ def main() -> int:
             file=sys.stderr,
         )
         raise SystemExit(2)
-
-
-if __name__ == "__main__":
-    raise SystemExit(main())

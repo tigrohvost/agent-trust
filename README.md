@@ -1,5 +1,55 @@
 # Agent Trust
 
+<!-- agent-trust-public-refresh -->
+
+Agent Trust is a dependency-free local pre-action trust gate for AI agents. It emits a deterministic JSON bundle before an agent crosses a risky boundary: tool/MCP use, browser actions, external skills/plugins, x402 or paid endpoints, publishing/outreach, or other side effects.
+
+The public repository is intentionally small and runnable: no cloud account, no wallet, no network call, no secret collection, no real-money path.
+
+## Two-minute proof
+
+```bash
+git clone https://github.com/tigrohvost/agent-trust.git
+cd agent-trust
+python3 -m pip install -e .
+bash scripts/agent_trust_first_run.sh
+```
+
+Expected result: all commands exit `0`; `examples/agent_trust_doctor.py` prints JSON with `ok: true`.
+
+## Core commands
+
+```bash
+python3 -m agent_trust.cli --print-contract
+python3 -m agent_trust.cli examples/input.json
+python3 examples/agent_trust_verify.py
+python3 examples/agent_trust_doctor.py
+```
+
+## Integration paths
+
+- CLI: `python3 -m agent_trust.cli examples/input.json`
+- Python import: `from agent_trust.bundle import build_agent_trust_bundle`
+- Agent discovery: `examples/agent_trust_manifest.json`
+- Schemas: `schemas/agent_trust_request.schema.json` and `schemas/agent_trust_bundle.schema.json`
+- Reviewer packet: `examples/agent_trust_review_packet.json`
+
+## Safety boundary
+
+Agent Trust is advisory evidence, not a hosted enforcement service or compliance certificate. The checked-in proof path performs no network calls, no wallet access, no code execution of untrusted inputs, no signing, no payments, and no real-money action. Production use still needs a non-bypassable policy chokepoint.
+
+## What to read next
+
+- `docs/AGENT_TRUST_FIRST_RUN.md` — fastest proof path.
+- `docs/AGENT_TRUST_FOR_AGENTS.md` — how another agent should consume it.
+- `docs/AGENT_TRUST_INTEGRATION.md` — CLI/import/schema integration choices.
+- `docs/AGENT_TRUST_THREAT_MODEL.md` — trust boundaries and residual risks.
+
+
+---
+
+# Agent Trust
+
 **Agent Trust** is a small, dependency-free Python package and portable agent skill for local pre-action trust checks by autonomous agents.
 
 It combines four pieces in one repository:

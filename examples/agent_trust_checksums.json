@@ -1,0 +1,313 @@
+{
+  "algorithm": "sha256",
+  "contract_version": "agent-trust-bundle-v1",
+  "files": [
+    {
+      "bytes": 7566,
+      "path": "examples/agent_trust_adoption_readiness.py",
+      "sha256": "53b22949bac18b7f55bf77689e6dc81657057d9f082018e790cc3805016299cb"
+    },
+    {
+      "bytes": 7152,
+      "path": "examples/agent_trust_agent_integration_recipe.md",
+      "sha256": "95cf66d0c1d9bf0dc1c1ca65b226b0abbe8ef131b3eaa3c58e35f72c3194b301"
+    },
+    {
+      "bytes": 12683,
+      "path": "examples/agent_trust_agent_landing.json",
+      "sha256": "62e722f23b12cbf9fd65c4a78cb438bb172ec4d8a5680c32ead9cd89276416d8"
+    },
+    {
+      "bytes": 4199,
+      "path": "examples/agent_trust_agent_security_evidence.py",
+      "sha256": "85ad01dad32ecdc8407a5f646112ee751d94b3893c60bbeeadcbc7a081b0810a"
+    },
+    {
+      "bytes": 9562,
+      "path": "examples/agent_trust_atr_advisory_check.py",
+      "sha256": "9466610e342f664b74a599276e0ba738b3d5ac38cebb8c7e90429306c338895c"
+    },
+    {
+      "bytes": 1606,
+      "path": "examples/agent_trust_base_sepolia.env.example",
+      "sha256": "cda91b58035a054b3345216e2bc9c9682b40538775136719ad1275cd3e79c6f7"
+    },
+    {
+      "bytes": 4397,
+      "path": "examples/agent_trust_base_sepolia_live_boundary.py",
+      "sha256": "a1eacdb4a795d26228779b553dc6e426d941898a41c3b14e2c51197c38d721b6"
+    },
+    {
+      "bytes": 6849,
+      "path": "examples/agent_trust_base_sepolia_preflight.py",
+      "sha256": "c7cb2d86f2d717b318933b8d6402e5ea6c5e1b260e0456772fc05e5809a08522"
+    },
+    {
+      "bytes": 8824,
+      "path": "examples/agent_trust_benchmark_intake_evidence.py",
+      "sha256": "ff8cae63b89724e6ec54a72c6eb84bc2be62cf133dacb69199080da44b537cc8"
+    },
+    {
+      "bytes": 7390,
+      "path": "examples/agent_trust_case_memory.py",
+      "sha256": "f8c8de638aa4ef5833c87f23258052fff9ca6d90b6af03fc953e5847411626b8"
+    },
+    {
+      "bytes": 3545,
+      "path": "examples/agent_trust_consumer_decision.py",
+      "sha256": "55dec63684d2d67cf98b7a48035e3492fff459a7412a2d8d9e9f87f9ec7f830c"
+    },
+    {
+      "bytes": 9789,
+      "path": "examples/agent_trust_cross_surface_intake.py",
+      "sha256": "0af388d0aca4507224ac5867bf0d7d424b5c724536cf0d98a7e2dd87d0a2fcf7"
+    },
+    {
+      "bytes": 12532,
+      "path": "examples/agent_trust_daily_review.py",
+      "sha256": "0b0c1117dfe9521ef77790c4dff60666bd056fefffb0025f10dc2e063f530917"
+    },
+    {
+      "bytes": 1149,
+      "path": "examples/agent_trust_discovery_client.py",
+      "sha256": "c74ec02f2bd3a328092d75e7eaaf62bd9427023deba07f625fa93b9820a36a8e"
+    },
+    {
+      "bytes": 5179,
+      "path": "examples/agent_trust_dnsaid_discovery.py",
+      "sha256": "0aebe193f203e5c3fce936d36c18e86c26232ac31f4bd9186a6aa268ffbeebf0"
+    },
+    {
+      "bytes": 76091,
+      "path": "examples/agent_trust_doctor.py",
+      "sha256": "aaf1dd3e8f291bac315c272af6f4d4d80bef54ace867ec4e8ec3058e1f0e0e47"
+    },
+    {
+      "bytes": 8961,
+      "path": "examples/agent_trust_efficacy_benchmark.py",
+      "sha256": "5f3c7845c8999ed74a7e0317c1b32a0f69cedcb88cacba921f1e102efa1d8628"
+    },
+    {
+      "bytes": 8922,
+      "path": "examples/agent_trust_evidence_transcript.py",
+      "sha256": "d083374867119cb2bc3698660763ee913939dffbcfbf468b530dd603f8dc4d18"
+    },
+    {
+      "bytes": 14154,
+      "path": "examples/agent_trust_exposure_decision_gate.py",
+      "sha256": "4e7ffa449ff01aaa310c82772d06c8258d4bfa23dc50d7bbd0438d8dbf307f68"
+    },
+    {
+      "bytes": 5152,
+      "path": "examples/agent_trust_exposure_edge_prep.py",
+      "sha256": "41a88ac822e9eb95a55ecdd7b49af6c8418164f7131b59f334cfba87142e14cd"
+    },
+    {
+      "bytes": 11992,
+      "path": "examples/agent_trust_exposure_probe.py",
+      "sha256": "5c0c3c001a999082b877a17b7adf8f1841b62999772f159263d826cc82bcf6fb"
+    },
+    {
+      "bytes": 1989,
+      "path": "examples/agent_trust_external_skill_gate.py",
+      "sha256": "b8bd4bd0facd7c8cc0bf763ae91c953919f728e27c391b14aa9abab57f10226f"
+    },
+    {
+      "bytes": 15657,
+      "path": "examples/agent_trust_first_pilot_review_check.py",
+      "sha256": "33a63f658a7cda0a58cef067583c55deb829679c5935ab1d19eb8b2f60e43824"
+    },
+    {
+      "bytes": 2334,
+      "path": "examples/agent_trust_framework_gate.py",
+      "sha256": "92eac9a9d3840aee6afa89a7faa73562c4d8ea8db436053d9b3944694ac2ba78"
+    },
+    {
+      "bytes": 9361,
+      "path": "examples/agent_trust_free_review_intake.py",
+      "sha256": "6886a337d1b13c113af9a21cf56a736a83f9c2055a61c622a1dfa1bdcc53ced6"
+    },
+    {
+      "bytes": 12379,
+      "path": "examples/agent_trust_incident_casebook.py",
+      "sha256": "fd94c3dfd9bc7904df7357c172f1e154e5b1a217c4141e0e78a440aa189ad034"
+    },
+    {
+      "bytes": 1277,
+      "path": "examples/input.json",
+      "sha256": "795894c874175cbfd54357a38f0340e777bb3f541b7477ccb614964ddbae62f7"
+    },
+    {
+      "bytes": 6956,
+      "path": "examples/agent_trust_intake_contract_check.py",
+      "sha256": "6deb07500715b18ed8d2c1e128220159864cfdeab1f7d9c8bcc716bd5abad3a3"
+    },
+    {
+      "bytes": 8576,
+      "path": "examples/agent_trust_intake_review_packet.py",
+      "sha256": "2c120fa2abae44f37ac4add0a6714a1d73602ee3552f8a62754a2c1937d63f69"
+    },
+    {
+      "bytes": 8985,
+      "path": "examples/agent_trust_integration_ticket.py",
+      "sha256": "687b0197c8dd14031e0c2cedd981c3d40f4fcb47ba38812e1e137962006a6a10"
+    },
+    {
+      "bytes": 14477,
+      "path": "examples/agent_trust_layered_skill_scanning.py",
+      "sha256": "9cd280748a35203b17fe791020749b5273630f2dc9255e50fee549de5574d58e"
+    },
+    {
+      "bytes": 15471,
+      "path": "examples/agent_trust_live_self_use.py",
+      "sha256": "5569cd96d9241a6e14e5122796f17b436a613fd776c51f379692959c0154bc43"
+    },
+    {
+      "bytes": 5692,
+      "path": "examples/agent_trust_loopback_readiness.py",
+      "sha256": "44b0dcf7efa11387d3e73b419d7a00225be6967e98b31e5b7182d4e162a2134f"
+    },
+    {
+      "bytes": 41159,
+      "path": "examples/agent_trust_manifest.json",
+      "sha256": "769dd8b616bbf4f32f41a46f70b789f249ac41f33ab4a9d97096a240e8aee740"
+    },
+    {
+      "bytes": 9513,
+      "path": "examples/agent_trust_mvp_smoke.py",
+      "sha256": "ce64f9f5a8c07de56139d17c8b8eccc2b3f4dadbc4cc7293e8d0505b05f8e1a2"
+    },
+    {
+      "bytes": 8122,
+      "path": "examples/agent_trust_nvidia_verified_agent_skills.py",
+      "sha256": "38553b384bf42247b36e892ffe3fa26c254795f2e0e7ee2591fec66f11fc00cb"
+    },
+    {
+      "bytes": 4800,
+      "path": "examples/output.json",
+      "sha256": "7ae9c8fdc75820cd18a2c038eef3a59f34e406b32fca4d50d06e25e0025949fc"
+    },
+    {
+      "bytes": 8092,
+      "path": "examples/agent_trust_prelaunch_gate.py",
+      "sha256": "807bbbb51b131861e5afc5a0ce3759dad32e0121eb4ee5c666b49e55fdf26057"
+    },
+    {
+      "bytes": 12839,
+      "path": "examples/agent_trust_prompt_injection_coverage.py",
+      "sha256": "80a999c5b8211f92602d5318ca16f0078f563f5207999d90723a7e38c36bcabb"
+    },
+    {
+      "bytes": 5494,
+      "path": "examples/agent_trust_publication_readiness.py",
+      "sha256": "34fbe7d59401bf1b012484a9ff715bf7f2e7ff5c6054e8cf490d78f287a37c31"
+    },
+    {
+      "bytes": 601,
+      "path": "examples/agent_trust_request.py",
+      "sha256": "6a611cca716fc8b4530c56bec6050f67b359ef10e878a863b133e180d8d9d8c2"
+    },
+    {
+      "bytes": 6570,
+      "path": "examples/agent_trust_review_decision_gate.py",
+      "sha256": "a6fc9e29d0128590a7b60ecdc4d2f15a0b0f369535c4b18f6bb9776ce73f46d5"
+    },
+    {
+      "bytes": 13671,
+      "path": "examples/agent_trust_review_packet.json",
+      "sha256": "583c7bc1de18bb9d4510b7b0a83eaf5f22cdd582da15ffab53e52481704e7c26"
+    },
+    {
+      "bytes": 10014,
+      "path": "examples/agent_trust_reviewer_decision_dry_run.py",
+      "sha256": "d04c36b46426762a46e8202071a13e3a602caccdc9e8c92bd90c7b28ea88b109"
+    },
+    {
+      "bytes": 11710,
+      "path": "examples/agent_trust_reviewer_handoff.py",
+      "sha256": "51c39077ca0c50b7286fea2ff2f83d8a54d2d68468fe1b013dde8128f560ae79"
+    },
+    {
+      "bytes": 10273,
+      "path": "examples/agent_trust_reviewer_response_packet.py",
+      "sha256": "ed2cae3c99da498d6e48f70c5c19895d4d9d6bcd9788bb79a95a25981c1c52a8"
+    },
+    {
+      "bytes": 18491,
+      "path": "examples/agent_trust_runtime_signal_gate.py",
+      "sha256": "ab6a09ae296283c3192f15f1e1837086267c51e20ddac74e6f956796c4eba14d"
+    },
+    {
+      "bytes": 10541,
+      "path": "examples/agent_trust_scanner_evidence.py",
+      "sha256": "6c7f71efc190a2b06f4b52f6a6c404c19255a62d06230800b8d89826d812d444"
+    },
+    {
+      "bytes": 5997,
+      "path": "examples/agent_trust_schema.json",
+      "sha256": "17d3917d3e3412edd0f71b44435884ba172d9808c77d8506c3c4bd8ce359f006"
+    },
+    {
+      "bytes": 7947,
+      "path": "examples/agent_trust_skill_installability_check.py",
+      "sha256": "d370c2d332020b93d7c8e4fd40fb4da6bb898046395b17d6dd0a954004a9d690"
+    },
+    {
+      "bytes": 4416,
+      "path": "examples/agent_trust_skill_manifest.json",
+      "sha256": "fd26386c6ecde09ac39cf886b780a9d13cb1025152af9ae3ccbd1369ab8f5845"
+    },
+    {
+      "bytes": 1681,
+      "path": "examples/agent_trust_static_scope_check.py",
+      "sha256": "41ec81af67181a5fad09c1ee860fac5ae00fa6e89739e46d0b1cc6f2179faadb"
+    },
+    {
+      "bytes": 10747,
+      "path": "examples/agent_trust_temporal_multimodal_checklist.py",
+      "sha256": "2f0fab1aaca54398129b1c7104322104bc09292544913bccb662c0f265cce1b4"
+    },
+    {
+      "bytes": 5165,
+      "path": "examples/agent_trust_tool_output_injection_case.py",
+      "sha256": "10f4e776d2a38cd93836b0cb7ffcc58a10177134268490e1904668e5ffd7a5dc"
+    },
+    {
+      "bytes": 8131,
+      "path": "examples/agent_trust_trajectory_eval.py",
+      "sha256": "e5946e9aaa5c42b195851dc38339a48ced0f405d3316a87caf9b79300f747b74"
+    },
+    {
+      "bytes": 3208,
+      "path": "examples/agent_trust_verify.py",
+      "sha256": "5844ff38bd1c6b022cfebfbfeb6d8f0ee9528814e21359c2bb7e22077d28b75f"
+    },
+    {
+      "bytes": 4193,
+      "path": "examples/agent_trust_workflow_pressure_gate.py",
+      "sha256": "a32a4259f56114317774c755e8225729cfddf63030c452dcd9da92fec7fc8a39"
+    },
+    {
+      "bytes": 1962,
+      "path": "examples/agent_trust_zero_trust_gate.py",
+      "sha256": "e9165793a1ca0d48f2ff5e91491597a008a24a1de88f42e43d2e232246631ea3"
+    },
+    {
+      "bytes": 9292,
+      "path": "schemas/agent_trust_bundle.schema.json",
+      "sha256": "64ac8eaadef6e263d5367b504b22e0f0188623d66095a2c89d0173bb0fed5209"
+    },
+    {
+      "bytes": 3021,
+      "path": "schemas/agent_trust_manifest.schema.json",
+      "sha256": "27ad1c01c812a8bba01437eccf2edd9a002090bf26844f44a98033ce61e9d43c"
+    },
+    {
+      "bytes": 1877,
+      "path": "schemas/agent_trust_request.schema.json",
+      "sha256": "8b572c7600e54b85c4ac11b67ebbd620e104107258eadc233254b67f061203d8"
+    }
+  ],
+  "name": "Agent Trust examples checksums",
+  "scope": "canonical Agent Trust examples packet artifacts excluding this checksum file"
+}

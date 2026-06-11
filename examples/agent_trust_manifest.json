@@ -1,0 +1,687 @@
+{
+  "artifacts": [
+    {
+      "description": "Local unsent first-reviewer decision packet consuming the reviewer decision dry-run evidence, with filled evidence summary, accept/needs-changes/reject rubric, reviewer questions, response shape, and no-external-action boundaries.",
+      "kind": "reviewer_decision_packet",
+      "name": "first_pilot_review_packet",
+      "path": "docs/AGENT_TRUST_FIRST_PILOT_REVIEW_PACKET.md"
+    },
+    {
+      "description": "Local unsent first-reviewer/client ask packet with minimal ask text, required proof command, acceptance questions, expected decision shape, and stop boundaries before any outreach, posting, wallet, signing, payment, live-network, or repository-setting action.",
+      "kind": "first_reviewer_client_ask_packet",
+      "name": "first_reviewer_client_ask",
+      "path": "docs/AGENT_TRUST_FIRST_REVIEWER_CLIENT_ASK.md"
+    },
+    {
+      "description": "Local go/no-go send-readiness gate before any future single Agent Trust first-reviewer/client ask; consumes the ask packet, reviewer decision packet, tracker evidence, handoff, manifest, landing packet, and reviewer dry-run while preserving no-send/no-outreach/no-wallet/no-payment/no-secret boundaries.",
+      "kind": "first_reviewer_send_readiness_gate",
+      "name": "first_reviewer_send_readiness_gate",
+      "path": "docs/AGENT_TRUST_FIRST_REVIEWER_SEND_READINESS_GATE.md"
+    },
+    {
+      "description": "Local unsent LangChain Forum / Talking Shop send-intent packet for exactly one future public non-soliciting Agent Trust first-reviewer/client ask; records channel fit, proof command, draft shape, audit requirements, and stop boundaries without posting, account use, network value transfer, wallet/signing, payment, outreach, or secret exposure.",
+      "kind": "langchain_forum_send_intent_packet",
+      "name": "langchain_forum_send_intent",
+      "path": "docs/AGENT_TRUST_LANGCHAIN_FORUM_SEND_INTENT.md"
+    },
+    {
+      "description": "Local adoption-readiness checkpoint aggregating doctor, consumer decision, and framework-gate evidence without external action.",
+      "kind": "python-example",
+      "path": "examples/agent_trust_adoption_readiness.py"
+    },
+    {
+      "description": "Minimal agent-integration recipe showing how another agent wraps Agent Trust as a pre-action gate before risky browser/tool/payment-like actions, with request shape, decision mapping, boundaries, proof commands, and stop conditions.",
+      "kind": "agent_integration_recipe",
+      "name": "agent_integration_recipe",
+      "path": "examples/agent_trust_agent_integration_recipe.md"
+    },
+    {
+      "description": "Canonical self-readable one-hop landing packet for agents: root entrypoint, guide, proof commands, integration decision, and hard stops.",
+      "kind": "agent_landing_packet",
+      "name": "agent_landing",
+      "path": "examples/agent_trust_agent_landing.json"
+    },
+    {
+      "description": "Local sanitized agent-security evidence packet for memory/context, authorization, orchestration, and task-warrant risks.",
+      "kind": "agent_security_evidence_example",
+      "name": "agent_security_evidence",
+      "path": "examples/agent_trust_agent_security_evidence.py"
+    },
+    {
+      "description": "Secret-free local env activation template for Base Sepolia x402 preflight provisioning; placeholders only, no wallet, signing, payment, network, or secret behavior.",
+      "kind": "testnet_activation_template",
+      "path": "examples/agent_trust_base_sepolia.env.example"
+    },
+    {
+      "description": "Dry-run-only boundary describing the future live Base Sepolia x402 client command shape, env contract, sanitized logging rules, and stop conditions without performing network, wallet, signing, or payment behavior.",
+      "kind": "testnet_live_boundary",
+      "path": "examples/agent_trust_base_sepolia_live_boundary.py"
+    },
+    {
+      "description": "Secret-safe local readiness preflight for a future Base Sepolia x402 testnet transaction; performs no network, wallet, signing, or transaction behavior.",
+      "kind": "testnet_preflight",
+      "path": "examples/agent_trust_base_sepolia_preflight.py"
+    },
+    {
+      "description": "Local ISC-Bench benchmark-intake evidence packet for synthetic or user-supplied benchmark/repo/task snippets before inspecting untrusted benchmark materials or executing tests/tools.",
+      "kind": "benchmark_intake_evidence",
+      "name": "benchmark_intake_evidence",
+      "path": "examples/agent_trust_benchmark_intake_evidence.py"
+    },
+    {
+      "catalog_api": "agent_trust.bundle_boundaries.agent_trust_boundary_catalog",
+      "covers_grouped_skill_backlog_boundaries": 12,
+      "description": "Deterministic local Agent Trust / ISC-Bench boundary-intake classifier for descriptors, emitting allow/review/deny/quarantine packets with matched contract_artifact pointers for all 12 grouped skill-library backlog boundaries, without network, execution, wallet, secrets, or external action.",
+      "kind": "boundary_intake_classifier",
+      "name": "boundary_intake",
+      "path": "examples/agent_trust_boundary_intake.py"
+    },
+    {
+      "description": "Dependency-free Rain-native Agent Trust case-memory seed for local cases, provenance, threat signals, decisions, and gap summaries; inspired by gbrain brain-layer patterns without importing gbrain code or adding network/runtime dependencies.",
+      "kind": "case_memory_seed",
+      "name": "case_memory_seed",
+      "path": "examples/agent_trust_case_memory.py"
+    },
+    {
+      "description": "SHA-256 integrity manifest for canonical Agent Trust example artifacts.",
+      "kind": "checksum_manifest",
+      "path": "examples/agent_trust_checksums.json"
+    },
+    {
+      "description": "Reads the manifest, review packet, and doctor output to decide integrate_experimentally or abstain for another local agent.",
+      "kind": "consumer_decision_example",
+      "path": "examples/agent_trust_consumer_decision.py"
+    },
+    {
+      "description": "Local cross-surface intake gate for workflow-induced safety collapse across prompts, repos, web text, tool/MCP descriptors, and inter-agent messages before execution or external action.",
+      "kind": "cross_surface_intake_gate",
+      "name": "cross_surface_intake",
+      "path": "examples/agent_trust_cross_surface_intake.py"
+    },
+    {
+      "description": "Machine-readable local daily Agent Trust security-and-progress checkpoint for release sync, git cleanliness, doctor consistency, and Base Sepolia dry-run boundary validation.",
+      "kind": "python-example",
+      "path": "examples/agent_trust_daily_review.py"
+    },
+    {
+      "description": "Fetches the local Agent Trust agent-discovery document from the HTTP surface.",
+      "kind": "local_http_discovery_client_example",
+      "path": "examples/agent_trust_discovery_client.py"
+    },
+    {
+      "description": "Dependency-free local DNS-AID discovery/readiness packet for Agent Trust, emitting inert SVCB-style publication metadata and verification requirements without DNS writes, DNSSEC signing, network, secrets, or repository-setting changes.",
+      "kind": "dns_aid_discovery_readiness_packet",
+      "name": "dns_aid_discovery",
+      "path": "examples/agent_trust_dnsaid_discovery.py"
+    },
+    {
+      "description": "Checks local consistency of the example packet, schemas, manifest, and verifier.",
+      "kind": "doctor",
+      "path": "examples/agent_trust_doctor.py"
+    },
+    {
+      "description": "Dependency-free local synthetic efficacy benchmark reporting expected vs observed Agent Trust proceed/review/deny behavior over checked-in adversarial descriptors without external inputs or action.",
+      "kind": "efficacy_benchmark",
+      "name": "efficacy_benchmark",
+      "path": "examples/agent_trust_efficacy_benchmark.py"
+    },
+    {
+      "description": "Reviewer-facing local evidence transcript summarizing doctor, adoption-readiness, and daily-review proof without network, wallet, signing, payment, outreach, or external action.",
+      "kind": "python-example",
+      "path": "examples/agent_trust_evidence_transcript.py"
+    },
+    {
+      "description": "Local go/no-go gate for a controlled Agent Trust MVP edge plan: verifies 8766-style dedicated exposure, three-path allowlist, body limit, security-header requirements, and 8765 control-console refusal without opening ports or making network calls.",
+      "kind": "exposure_decision_gate",
+      "name": "exposure_decision_gate",
+      "path": "examples/agent_trust_exposure_decision_gate.py"
+    },
+    {
+      "description": "Local inert edge-preparation packet that turns the controlled 8766 decision gate into an operator checklist, allowlisted path plan, required header contract, logging rules, and post-configuration probe URLs without opening ports, modifying proxies, or making network calls.",
+      "kind": "exposure_edge_prep",
+      "name": "exposure_edge_prep",
+      "path": "examples/agent_trust_exposure_edge_prep.py"
+    },
+    {
+      "description": "Go/no-go probe for the live Agent Trust surface before controlled external exposure; checks discovery readiness, JSON shape, security headers, safety boundary, public exposure boundary, and optional allowlisted/forbidden edge paths without opening ports or publishing.",
+      "kind": "pre_exposure_probe",
+      "name": "exposure_probe",
+      "path": "examples/agent_trust_exposure_probe.py"
+    },
+    {
+      "description": "Local no-network/no-execution pre-action gate for external skill/MCP/plugin/repo descriptors.",
+      "name": "external_skill_gate",
+      "path": "examples/agent_trust_external_skill_gate.py",
+      "type": "runnable_pre_action_gate"
+    },
+    {
+      "description": "One-command local first-pilot review-path checker composing reviewer response and provenance decision outputs into a single review-only readiness verdict.",
+      "kind": "first_pilot_review_check",
+      "name": "first_pilot_review_check",
+      "path": "examples/agent_trust_first_pilot_review_check.py"
+    },
+    {
+      "description": "Tiny dependency-free framework-shaped pre-action gate mapping trust-bundle verdicts to proceed, review, or deny without performing the risky action.",
+      "kind": "framework_gate_example",
+      "path": "examples/agent_trust_framework_gate.py"
+    },
+    {
+      "description": "Dependency-free local free-review intake packet generator for sanitized public agent-security artifacts; maps description/action/risk surface to Agent Trust evidence path or abstain without external action.",
+      "kind": "free_review_intake",
+      "name": "free_review_intake",
+      "path": "examples/agent_trust_free_review_intake.py"
+    },
+    {
+      "description": "Posts the canonical request to the local 127.0.0.1 HTTP endpoint.",
+      "kind": "local_http_client_example",
+      "path": "examples/agent_trust_http_client.py"
+    },
+    {
+      "description": "Calls the trust-bundle builder directly in-process.",
+      "kind": "python_import_example",
+      "path": "examples/agent_trust_import.py"
+    },
+    {
+      "description": "Dependency-free local incident casebook evidence packet for public wallet/tool injection, MCP poisoning, and cross-prompt tool-call attempts without raw exploit replay or external action.",
+      "kind": "incident_casebook_example",
+      "name": "incident_casebook",
+      "path": "examples/agent_trust_incident_casebook.py"
+    },
+    {
+      "description": "Checked-in canonical request fixture.",
+      "kind": "sample_request",
+      "path": "examples/input.json"
+    },
+    {
+      "description": "Local contract check ensuring cross-surface intake and intake review packet artifacts stay aligned on surfaces, decisions, and workflow-pressure signal taxonomy without external action.",
+      "kind": "intake_contract_check",
+      "name": "intake_contract_check",
+      "path": "examples/agent_trust_intake_contract_check.py"
+    },
+    {
+      "description": "Local intake review packet wrapper that emits sanitized workflow-pressure review decisions from synthetic or user-supplied prompt/repo/web/tool-MCP/inter-agent text without external action.",
+      "kind": "intake_review_packet",
+      "name": "intake_review_packet",
+      "path": "examples/agent_trust_intake_review_packet.py"
+    },
+    {
+      "description": "Dependency-free local first-integration ticket that turns Agent Trust proof into scope, commands, a pre-action handoff contract, acceptance criteria, reviewer questions, and stop conditions without external action.",
+      "kind": "integration_ticket_example",
+      "name": "integration_ticket",
+      "path": "examples/agent_trust_integration_ticket.py"
+    },
+    {
+      "description": "Dependency-free local layered skill-scanning evidence receipt that aggregates synthetic malware/reputation, static-analysis, agentic semantic-risk, provenance/metadata/moderation, and scanner-disagreement signals into proceed/review/deny without external scanners, untrusted execution, secrets, wallets, payments, signing, or third-party verification claims.",
+      "kind": "layered_skill_scanning_evidence",
+      "name": "layered_skill_scanning",
+      "path": "examples/agent_trust_layered_skill_scanning.py"
+    },
+    {
+      "description": "Local self-use runner for the dedicated loopback MVP endpoint: posts the checked-in canonical request, confirms malformed payload rejection, and correlates request-id/bundle-id audit records using safe summary fields only.",
+      "kind": "loopback_http_self_use_runner",
+      "name": "live_self_use",
+      "path": "examples/agent_trust_live_self_use.py"
+    },
+    {
+      "description": "Local loopback readiness proof that runs the exposure decision gate, launches the dedicated Agent Trust MVP app on 127.0.0.1, probes allowlisted and forbidden paths, and preserves no-internet/no-wallet/no-signing/no-payment/no-real-money boundaries.",
+      "kind": "loopback_readiness_proof",
+      "name": "loopback_readiness",
+      "path": "examples/agent_trust_loopback_readiness.py"
+    },
+    {
+      "description": "Launches the standalone Agent Trust MVP app on a loopback test port, checks health/discovery/contract/bundle, and proves the control-console port 8765 is not the MVP surface.",
+      "kind": "local_http_mvp_smoke",
+      "name": "dedicated_mvp_smoke",
+      "path": "examples/agent_trust_mvp_smoke.py"
+    },
+    {
+      "description": "Dependency-free local compatibility reporter mapping Agent Trust outputs and evidence to NVIDIA-style Verified Agent Skills capability-governance concepts, explicitly identifying signing, provenance, verification, and production-evaluation gaps without network, signing, external verification, secrets, wallets, payments, or external action.",
+      "kind": "nvidia_verified_agent_skills_compatibility_report",
+      "name": "nvidia_verified_agent_skills_map",
+      "path": "examples/agent_trust_nvidia_verified_agent_skills.py"
+    },
+    {
+      "description": "Checked-in deterministic bundle output for the canonical request.",
+      "kind": "golden_output",
+      "path": "examples/output.json"
+    },
+    {
+      "description": "Composes doctor, adoption readiness, publication readiness, evidence transcript, and review decision gate into one local no-external-action HN/client-review prelaunch decision.",
+      "kind": "prelaunch_gate",
+      "name": "prelaunch_gate",
+      "path": "examples/agent_trust_prelaunch_gate.py"
+    },
+    {
+      "description": "Local anti-drift checker for the Show HN / first-review packet, verifying canonical Sepolia state, faucet stops, proof commands, and publication boundaries without external action.",
+      "kind": "publication_readiness_checker",
+      "name": "publication_readiness",
+      "path": "examples/agent_trust_publication_readiness.py"
+    },
+    {
+      "description": "Prints the canonical versioned request JSON.",
+      "kind": "request_builder",
+      "path": "examples/agent_trust_request.py"
+    },
+    {
+      "description": "Review-only local decision gate that consumes the evidence transcript and states what reviewers may decide while refusing outreach, live testnet, wallet, signing, payment, and real-money actions.",
+      "kind": "python-example",
+      "path": "examples/agent_trust_review_decision_gate.py"
+    },
+    {
+      "description": "Machine-readable external review packet naming local proof commands, canonical artifacts, review questions, stop conditions, and success signals.",
+      "kind": "external_review_packet",
+      "path": "examples/agent_trust_review_packet.json"
+    },
+    {
+      "description": "Local dry-run of the first external reviewer decision, including required evidence fields, pass/fail rubric, pilot signal mapping, and stop conditions without external action.",
+      "kind": "reviewer_decision_dry_run",
+      "name": "reviewer_decision_dry_run",
+      "path": "examples/agent_trust_reviewer_decision_dry_run.py"
+    },
+    {
+      "description": "Compact local reviewer handoff JSON composing prelaunch, evidence transcript, publication readiness, and adoption posture into one first-review packet without external action.",
+      "kind": "reviewer_handoff",
+      "name": "reviewer_handoff",
+      "path": "examples/agent_trust_reviewer_handoff.py"
+    },
+    {
+      "description": "Exact machine-readable first-reviewer response packet with accepted/rejected/needs-update decision shape, filled local evidence fields, pass/fail rubric results, pilot signal mapping, and no external action.",
+      "kind": "reviewer_response_packet",
+      "name": "reviewer_response_packet",
+      "path": "examples/agent_trust_reviewer_response_packet.py"
+    },
+    {
+      "description": "Dependency-free local runtime pre-action signal boundary that consumes scanner/registry/provenance evidence while keeping runtime identity, scoped grants, and Zero-Trust policy as the final proceed/review/deny decision source; performs no network, execution, wallet, secrets, or external action.",
+      "kind": "runtime_pre_action_signal_gate",
+      "name": "runtime_signal_gate",
+      "path": "examples/agent_trust_runtime_signal_gate.py"
+    },
+    {
+      "description": "Dependency-free local scanner-evidence packet mapping a sanitized high-risk scanner finding to a pre-action Agent Trust deny/review move without executing scanner code.",
+      "kind": "scanner_evidence_example",
+      "path": "examples/agent_trust_scanner_evidence.py"
+    },
+    {
+      "description": "Compact schema-like overview of the contract and error envelopes.",
+      "kind": "schema_overview",
+      "path": "examples/agent_trust_schema.json"
+    },
+    {
+      "description": "Dependency-free local static scope/manifest consistency check that compares self-declared tool or skill scopes with local manifest/lockfile-style evidence and emits advisory proceed/review/deny findings without executing third-party code.",
+      "kind": "static_scope_manifest_consistency_gate",
+      "name": "static_scope_check",
+      "path": "examples/agent_trust_static_scope_check.py"
+    },
+    {
+      "description": "Dependency-free local temporal-multimodal prompt-injection checklist/eval over synthetic video descriptors, detecting distributed frame instructions, overlay/subtitle injection, delayed triggers, repeated harmful cues, modality conflicts, and tool-action influence without real video processing or external action.",
+      "kind": "temporal_multimodal_prompt_injection_checklist",
+      "name": "temporal_multimodal_checklist",
+      "path": "examples/agent_trust_temporal_multimodal_checklist.py"
+    },
+    {
+      "description": "Dependency-free local Agent Trust / ISC-defense case packet classifying hostile instructions embedded in build/test/tool output as evidence, not authority, with required provenance, response, controls, and hard stops without external action.",
+      "kind": "tool_output_injection_case",
+      "name": "tool_output_injection_case",
+      "path": "examples/agent_trust_tool_output_injection_case.py"
+    },
+    {
+      "description": "Dependency-free local trajectory/stateful eval harness reporting per-step Agent Trust invariants across request intake, normalization, redaction, declaration evidence, policy decision, integrity receipt, persisted artifact simulation, and final verdict without external action.",
+      "kind": "trajectory_stateful_eval",
+      "name": "trajectory_eval",
+      "path": "examples/agent_trust_trajectory_eval.py"
+    },
+    {
+      "description": "Runs the CLI and compares output with the golden bundle.",
+      "kind": "verifier",
+      "path": "examples/agent_trust_verify.py"
+    },
+    {
+      "description": "Local ISC-Bench-informed workflow-pressure gate for validator/test/schema/fidelity pressure before execution.",
+      "kind": "workflow_pressure_gate_example",
+      "name": "workflow_pressure_gate",
+      "path": "examples/agent_trust_workflow_pressure_gate.py"
+    },
+    {
+      "description": "Dependency-free local Zero-Trust identity/policy pre-action gate that evaluates agent identity, least-privilege scopes, action sensitivity, provenance, and scanner signals into proceed/review/deny with an auditable receipt; performs no network, execution, wallet, secrets, or external action.",
+      "kind": "zero_trust_pre_action_gate",
+      "name": "zero_trust_identity_policy_gate",
+      "path": "examples/agent_trust_zero_trust_gate.py"
+    },
+    {
+      "description": "Draft 2020-12 JSON Schema for emitted trust-bundle JSON.",
+      "kind": "json_schema",
+      "path": "schemas/agent_trust_bundle.schema.json"
+    },
+    {
+      "description": "Draft 2020-12 JSON Schema for the agent-discoverable examples manifest.",
+      "kind": "json_schema",
+      "path": "schemas/agent_trust_manifest.schema.json"
+    },
+    {
+      "description": "Draft 2020-12 JSON Schema for accepted request JSON.",
+      "kind": "json_schema",
+      "path": "schemas/agent_trust_request.schema.json"
+    },
+    {
+      "description": "Tiny dependency-free ATR-inspired advisory checker with pinned local rules, scan-target gating, TP/TN fixtures, and sanitized Agent Trust findings without fetching ATR or executing external scanners.",
+      "kind": "atr_advisory_checker",
+      "name": "atr_advisory_check",
+      "path": "examples/agent_trust_atr_advisory_check.py"
+    }
+  ],
+  "capabilities": [
+    {
+      "command": "python3 examples/agent_trust_external_skill_gate.py --demo --compact",
+      "description": "Mandatory local pre-action gate for external skill/MCP/plugin/repo descriptors before use.",
+      "entrypoint": "examples/agent_trust_external_skill_gate.py",
+      "id": "external_skill_descriptor_pre_action_gate",
+      "safety_boundary": "local review packet only; no fetch, install, execution, secrets, wallet, payment, posting, outreach, or repository-settings mutation"
+    }
+  ],
+  "contract_version": "agent-trust-bundle-v1",
+  "docs": [
+    {
+      "description": "Agent Trust documentation entry point.",
+      "path": "docs/AGENT_TRUST.md"
+    },
+    {
+      "description": "Five-minute local first-run guide.",
+      "path": "docs/AGENT_TRUST_FIRST_RUN.md"
+    },
+    {
+      "description": "Choose-your-path integration checklist.",
+      "path": "docs/AGENT_TRUST_INTEGRATION.md"
+    },
+    {
+      "description": "Non-publishing external validation packet.",
+      "path": "docs/AGENT_TRUST_VALIDATION.md"
+    },
+    {
+      "description": "Secret-safe feedback template.",
+      "path": "docs/AGENT_TRUST_FEEDBACK.md"
+    },
+    {
+      "description": "Examples quickstart and artifact map.",
+      "path": "examples/README.md"
+    },
+    {
+      "description": "Base Sepolia x402 testnet readiness preflight guide.",
+      "path": "docs/AGENT_TRUST_BASE_SEPOLIA_PREFLIGHT.md"
+    },
+    {
+      "description": "Ethereum Sepolia official-guide wallet evidence packet with public address, secret alias, limits, and faucet/login gates.",
+      "path": "docs/AGENT_TRUST_ETHEREUM_SEPOLIA_EVIDENCE_PACKET.md"
+    },
+    {
+      "description": "Security-first backlog for converting LLMSecOps scanner outputs into Agent Trust evidence inputs without installing or executing third-party scanners by default.",
+      "path": "docs/AGENT_TRUST_SCANNER_BACKLOG.md"
+    },
+    {
+      "description": "Backlog for applying Awesome-LLM-agent-Security themes to Agent Trust evidence intake.",
+      "kind": "agent_security_backlog",
+      "name": "agent_security_backlog",
+      "path": "docs/AGENT_TRUST_AGENT_SECURITY_BACKLOG.md"
+    },
+    {
+      "description": "Compact local first-review handoff explaining what to run, output meanings, current Sepolia limitation, reviewer decision, pilot signal, and stop conditions.",
+      "path": "docs/AGENT_TRUST_REVIEWER_HANDOFF.md"
+    },
+    {
+      "description": "Local at-fw-001 framework/tooling reviewer packet with five-question integrate/abstain/revise rules and hard stops before external action.",
+      "path": "docs/AGENT_TRUST_AT_FW_001_REVIEWER_PACKET.md"
+    }
+  ],
+  "entrypoints": [
+    {
+      "command": "bash scripts/agent_trust_first_run.sh",
+      "description": "Shortest repo-root smoke test: request inspection, CLI, and golden verification.",
+      "name": "first_run"
+    },
+    {
+      "command": "python3 examples/agent_trust_request.py",
+      "description": "Print the canonical request shape.",
+      "name": "request"
+    },
+    {
+      "command": "python3 -m agent_trust.cli examples/input.json",
+      "description": "Run the local CLI contract.",
+      "name": "cli"
+    },
+    {
+      "command": "python3 examples/agent_trust_verify.py",
+      "description": "Verify CLI output against the checked-in golden bundle.",
+      "name": "verify"
+    },
+    {
+      "command": "python3 examples/agent_trust_doctor.py",
+      "description": "Check the checked-in example packet for local consistency.",
+      "name": "doctor"
+    },
+    {
+      "command": "python3 examples/agent_trust_consumer_decision.py",
+      "description": "Example consumer-agent integrate/abstain decision over local packet evidence.",
+      "name": "consumer_decision"
+    },
+    {
+      "command": "python3 examples/agent_trust_import.py",
+      "description": "Run the direct Python import example.",
+      "name": "import"
+    },
+    {
+      "command": "python3 examples/agent_trust_framework_gate.py",
+      "description": "Show where an agent framework or tool runner would gate a risky mock action before execution.",
+      "name": "framework_gate"
+    },
+    {
+      "command": "python3 examples/agent_trust_boundary_intake.py --demo",
+      "description": "Discoverable Agent Trust boundary-intake capability: classify a local descriptor before skill/MCP/repo/tool/web/API/execution/secret/external-action use; emits review-only allow/review/deny/quarantine packet without network, execution, secrets, wallets, posting, or payment.",
+      "name": "boundary_intake"
+    },
+    {
+      "command": "python3 examples/agent_trust_http_client.py",
+      "description": "Call the optional local HTTP endpoint at 127.0.0.1 after starting the server.",
+      "name": "http"
+    },
+    {
+      "command": "python3 examples/agent_trust_live_self_use.py --base-url http://127.0.0.1:8766",
+      "description": "Run the local-only live self-use bundle check against the dedicated 127.0.0.1:8766 MVP service with canonical/malformed requests and safe audit correlation.",
+      "name": "live_self_use"
+    },
+    {
+      "command": "python3 -m agent_trust.cli --print-contract",
+      "description": "Print machine-readable CLI contract metadata.",
+      "name": "contract"
+    },
+    {
+      "command": "python3 examples/agent_trust_base_sepolia_preflight.py",
+      "description": "Run the local no-network/no-wallet/no-signing Base Sepolia x402 readiness preflight.",
+      "name": "base_sepolia_preflight"
+    },
+    {
+      "command": "python3 examples/agent_trust_base_sepolia_live_boundary.py",
+      "description": "Emit the dry-run-only future live x402 Base Sepolia client boundary without performing a live call.",
+      "name": "base_sepolia_live_boundary"
+    },
+    {
+      "command": "python3 examples/agent_trust_daily_review.py",
+      "description": "Run the local daily Agent Trust security-and-progress checkpoint without network, wallet access, signing, transactions, or real money.",
+      "name": "daily_review"
+    },
+    {
+      "command": "python3 examples/agent_trust_adoption_readiness.py",
+      "description": "Summarize local adoption readiness from doctor, consumer-decision, and framework-gate evidence without outreach, network, wallet access, execution, signing, payment, or real money.",
+      "name": "adoption_readiness"
+    },
+    {
+      "command": "python3 examples/agent_trust_evidence_transcript.py",
+      "description": "Emit a reviewer-facing local evidence transcript from doctor, adoption-readiness, and daily-review proof without external action.",
+      "name": "evidence_transcript"
+    },
+    {
+      "command": "python3 examples/agent_trust_review_decision_gate.py",
+      "description": "Emit the local review-only decision boundary from the evidence transcript without authorizing outreach, live testnet, wallet, signing, payment, or real money.",
+      "name": "review_decision_gate"
+    },
+    {
+      "command": "python3 examples/agent_trust_scanner_evidence.py",
+      "description": "Emit a local sanitized scanner-evidence packet and Agent Trust pre-action move without installing or executing scanner code.",
+      "name": "scanner_evidence"
+    },
+    {
+      "command": "python3 examples/agent_trust_agent_security_evidence.py",
+      "description": "Emit deterministic local agent-security evidence packet without external action.",
+      "name": "agent_security_evidence"
+    },
+    {
+      "command": "python3 examples/agent_trust_incident_casebook.py",
+      "description": "Emit a local sanitized reviewer casebook for public wallet/tool injection, MCP poisoning, and cross-prompt tool-call attempt classes.",
+      "name": "incident_casebook"
+    },
+    {
+      "command": "python3 examples/agent_trust_integration_ticket.py",
+      "description": "Emit a local first-integration ticket for external agent/developer review without outreach or live action.",
+      "name": "integration_ticket"
+    },
+    {
+      "command": "python3 examples/agent_trust_workflow_pressure_gate.py",
+      "description": "Emit a local no-execution gate packet for workflow-induced validator/test/schema/fidelity pressure.",
+      "name": "workflow_pressure_gate"
+    },
+    {
+      "command": "python3 examples/agent_trust_publication_readiness.py",
+      "description": "Check that the local Show HN / first-review packet remains truthful before any external publication decision.",
+      "name": "publication_readiness"
+    },
+    {
+      "command": "python3 examples/agent_trust_prelaunch_gate.py",
+      "description": "Compose local Agent Trust checks into a single HN/client-review prelaunch decision without publishing, outreach, wallet, signing, payment, or network action.",
+      "name": "prelaunch_gate"
+    },
+    {
+      "command": "python3 examples/agent_trust_reviewer_handoff.py",
+      "description": "Emit one compact local human/agent reviewer handoff packet with commands, output meanings, Sepolia limitation, reviewer decision, and pilot signal boundaries.",
+      "name": "reviewer_handoff"
+    },
+    {
+      "command": "python3 examples/agent_trust_cross_surface_intake.py",
+      "description": "Emit a local no-execution cross-surface intake packet for workflow-induced agent-security pressure before action.",
+      "name": "cross_surface_intake"
+    },
+    {
+      "command": "python3 examples/agent_trust_intake_review_packet.py --synthetic",
+      "description": "Emit a local sanitized intake review packet for ISC workflow-pressure signals without external action.",
+      "name": "intake_review_packet"
+    },
+    {
+      "command": "python3 examples/agent_trust_intake_contract_check.py",
+      "description": "Check that cross-surface intake and intake review packet artifacts remain aligned without network, wallet, signing, payment, outreach, MCP, or untrusted execution.",
+      "name": "intake_contract_check"
+    },
+    {
+      "command": "python3 examples/agent_trust_benchmark_intake_evidence.py --synthetic",
+      "description": "Emit a local benchmark-intake evidence packet before untrusted ISC-style benchmark repo/task inspection, refusing tests, validators, tools, MCP calls, installs, and untrusted execution.",
+      "name": "benchmark_intake_evidence"
+    },
+    {
+      "command": "python3 examples/agent_trust_reviewer_decision_dry_run.py",
+      "description": "Dry-run the first reviewer decision locally without external action.",
+      "name": "reviewer_decision_dry_run"
+    },
+    {
+      "command": "python3 examples/agent_trust_reviewer_response_packet.py",
+      "description": "Emit the exact first-reviewer response packet locally without external action.",
+      "name": "reviewer_response_packet"
+    },
+    {
+      "command": "python3 examples/agent_trust_discovery_client.py",
+      "description": "Call the local agent-discovery endpoint at 127.0.0.1 after starting the server.",
+      "name": "discovery"
+    },
+    {
+      "command": "python3 examples/agent_trust_exposure_probe.py",
+      "description": "Return proceed_to_controlled_external_exposure only when the live discovery endpoint is reachable and carries the expected hardening/contract boundary.",
+      "name": "exposure_probe"
+    },
+    {
+      "command": "python3 examples/agent_trust_loopback_readiness.py",
+      "description": "Run the local gate + loopback MVP + edge-path readiness proof without opening external ports.",
+      "name": "loopback_readiness"
+    },
+    {
+      "command": "python3 examples/agent_trust_mvp_smoke.py",
+      "description": "Start and smoke-test the dedicated loopback-only Agent Trust MVP app before any controlled external exposure.",
+      "name": "dedicated_mvp_smoke"
+    },
+    {
+      "command": "python3 examples/agent_trust_exposure_decision_gate.py",
+      "description": "Evaluate the controlled 8766 Agent Trust MVP exposure plan locally without opening ports.",
+      "name": "exposure_decision_gate"
+    },
+    {
+      "command": "python3 examples/agent_trust_exposure_edge_prep.py",
+      "description": "Emit the local 8766-only edge-prep packet after the decision gate passes; no ports are opened and no network calls are made.",
+      "name": "exposure_edge_prep"
+    },
+    {
+      "command": "python3 examples/agent_trust_first_pilot_review_check.py",
+      "description": "Check first-pilot review-path readiness and provenance-evidence-not-trust classification without external action.",
+      "name": "first_pilot_review_check"
+    },
+    {
+      "command": "python3 examples/agent_trust_external_skill_gate.py --demo --compact",
+      "description": "Run the external skill descriptor pre-action gate with the built-in synthetic demo packet.",
+      "name": "external_skill_gate"
+    },
+    {
+      "command": "python3 examples/agent_trust_runtime_signal_gate.py --demo --compact",
+      "description": "Demonstrates that scanner/registry verdicts are static evidence, not runtime authorization, before an agent uses a tool/skill/workflow.",
+      "entrypoint": "examples/agent_trust_runtime_signal_gate.py",
+      "name": "runtime_signal_gate"
+    },
+    {
+      "command": "python3 examples/agent_trust_efficacy_benchmark.py --fail-on-mismatch",
+      "description": "Run the local synthetic Agent Trust efficacy benchmark and fail if expected proceed/review/deny behavior drifts.",
+      "name": "efficacy_benchmark"
+    }
+  ],
+  "http_surfaces": [
+    {
+      "description": "Machine-readable Agent Trust discovery surface for AI agents, MCP clients, tool directories, and reviewers.",
+      "method": "GET",
+      "path": "/api/agent-trust/discovery"
+    }
+  ],
+  "name": "Agent Trust examples manifest",
+  "purpose": "Agent-discoverable map of the local Agent Trust Bundle examples, commands, schemas, and validation paths.",
+  "safety_boundary": {
+    "execution": false,
+    "network_calls": false,
+    "notes": "The bundle builder is local and deterministic. The optional HTTP client and live self-use runner contact only 127.0.0.1 after the local Ouroboros server or dedicated Agent Trust MVP service is already running.",
+    "real_money": false,
+    "wallet_access": false
+  },
+  "success_signals": [
+    "Another agent can locate the request fixture, CLI command, verifier, schemas, and safety boundary from this JSON alone.",
+    "The doctor reports ok=true after local checkout.",
+    "A consumer can name the integration path they would use without reading source code.",
+    "A reviewer can use the review packet plus doctor output to decide whether the local contract is worth experimental integration.",
+    "Consumer decision returns integrate_experimentally using only local manifest, review packet, and doctor evidence.",
+    "A framework-shaped example maps bundle verdicts to proceed, review, or deny without performing the risky action.",
+    "Canonical request and bundle output preserve intended_integration_context so buyers can state where the pre-action gate fits in their agent loop.",
+    "Base Sepolia preflight reports secret-safe readiness for a future x402 testnet transaction while refusing mainnet chain ids, oversized caps, missing throwaway-wallet secrets, and any network/wallet/signing behavior.",
+    "Base Sepolia live boundary reports the future client command/env/logging/stop contract while keeping dry_run_only=true and live_call_performed=false.",
+    "Adoption readiness checkpoint returns integrate_experimentally_with_human_review_gate only when doctor, consumer-decision, and framework-gate evidence all pass locally without external action.",
+    "Evidence transcript returns ok=true and names only local proof commands, safety boundaries, stop conditions, and reviewer interpretation without performing outreach or live network/wallet/payment actions.",
+    "Review decision gate returns ready_for_human_or_agent_review_only only when local transcript evidence is coherent, while explicitly refusing outreach, live Base Sepolia, wallet, signing, payment, and real-money actions.",
+    "Scanner evidence backlog gives first agent-clients a concrete way to submit sanitized Garak/PyRIT/promptfoo/LocalMod-style findings without raw exploit payloads or third-party scanner execution.",
+    "Scanner evidence example maps a sanitized high-risk prompt-injection/tool-abuse finding to deny or review without raw payloads, network calls, wallet access, real money, or third-party scanner execution.",
+    "Agent-security evidence packet maps memory/context, authorization-control, orchestration, and task-warrant risks to review/deny without external action.",
+    "Integration ticket gives first reviewers a ticket-shaped local adoption ask with scope, proof commands, a pre-action handoff contract, acceptance criteria, reviewer questions, and stop conditions while refusing outreach, wallet, signing, payment, real money, and external execution.",
+    "Publication readiness checker returns ok=true only when the Show HN / first-review packet names the canonical Sepolia address, no confirmed funding, current faucet stop states, local proof commands, and no-external-action boundaries.",
+    "Prelaunch gate returns proceed_to_human_review only when doctor, adoption readiness, publication readiness, evidence transcript, and review decision gate are locally coherent while refusing publication, outreach, wallet, signing, payment, and external submission.",
+    "A reviewer can run one handoff command and return review_accept, review_needs_changes, or review_reject with the current Sepolia limitation and next product move made explicit.",
+    "A pre-action intake gate can classify workflow pressure across prompt, repo, web, tool/MCP, and inter-agent surfaces without executing untrusted code.",
+    "Live self-use runner accepts only loopback HTTP origins with explicit ports, uses the checked-in canonical request fixture plus malformed negative case, and correlates request IDs and bundle IDs against safe audit summaries without raw request bodies or secret fields.",
+    "Reviewer can run the first-pilot review check and get first_pilot_review_path_ready while tool/MCP/API/wallet/signing/payment/outreach remain unauthorized."
+  ]
+}

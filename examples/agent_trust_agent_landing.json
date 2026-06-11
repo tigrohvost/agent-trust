@@ -1,0 +1,226 @@
+{
+  "agent_trust_boundary_intake_capability": {
+    "boundary": {
+      "no_install_or_shell_execution": true,
+      "no_network_calls": true,
+      "no_outreach_or_posting": true,
+      "no_payment_or_real_money": true,
+      "no_secret_reads": true,
+      "no_wallet_or_signing": true,
+      "review_only": true
+    },
+    "coverage": "Covers all 12 grouped skill-library backlog boundaries and links each matched boundary to its local metadata-first contract artifact under state/skill_library_analysis/.",
+    "demo_command": "python3 examples/agent_trust_boundary_intake.py --demo",
+    "entrypoint": "examples/agent_trust_boundary_intake.py",
+    "expected_demo_signals": [
+      "contract_version=agent-trust-boundary-intake-v1",
+      "verdict=quarantine for the built-in risky MCP skill demo",
+      "matched_boundaries includes dependency_firewall, external_action, scanner_execution, and web_api_appsec style signals when described by the demo",
+      "hard stops preserve no network, no execution, no secret reads/disclosure, no wallets/signing/payment, and no outreach/posting/external action"
+    ],
+    "file_command_shape": "python3 examples/agent_trust_boundary_intake.py --file path/to/descriptor.json",
+    "input": "JSON descriptor or raw text describing the candidate artifact/action and requested authority.",
+    "output": "JSON review packet with contract_version, verdict, matched_boundaries, contract_artifact pointers for matched backlog contracts, controls, reasons, packet_id, digest, trust_boundary label, and top-level hard-stop booleans such as network_calls=false, execution=false, secret_values_read=false, wallet_access=false, external_action=false.",
+    "purpose": "Discoverable pre-action classifier for local descriptors before using agent skills, MCP servers, repositories, web/API artifacts, scanners, execution paths, secrets, cloud/control-plane authority, OSINT/CTI, malware/reversing, OT/ICS, or incident-recovery workflows.",
+    "python_api": "from agent_trust.bundle_boundaries import classify_agent_trust_boundaries",
+    "python_catalog_api": "from agent_trust.bundle_boundaries import agent_trust_boundary_catalog",
+    "stdin_command_shape": "printf %s \"$DESCRIPTOR_JSON\" | python3 examples/agent_trust_boundary_intake.py",
+    "use_before": [
+      "installing or enabling an external agent skill, MCP server, plugin, or repo helper",
+      "granting a tool/web/API/scanner/execution path broader authority",
+      "handling descriptors that mention secrets, credentials, wallets, posting, payment, cloud/control-plane, malware/reversing, OT/ICS, OSINT/CTI, or incident-response authority"
+    ]
+  },
+  "agent_trust_runtime_signal_boundary_capability": {
+    "boundary": {
+      "no_execution": true,
+      "no_network_calls": true,
+      "no_outreach_or_posting": true,
+      "no_payment_or_real_money": true,
+      "no_secret_reads": true,
+      "no_wallet_or_signing": true,
+      "review_only": true
+    },
+    "demo_command": "python3 examples/agent_trust_runtime_signal_gate.py --demo",
+    "entrypoint": "examples/agent_trust_runtime_signal_gate.py",
+    "output": "JSON packet with pre_action_decision=proceed/review/deny, artifact_identity, scanner_signals, registry_signals, static_signal_effect, runtime_policy_receipt, reasons, controls, and audit_receipt.receipt_digest.",
+    "purpose": "Local runtime pre-action boundary that consumes scanner/registry evidence without letting clean static scans replace runtime identity, least-privilege grants, provenance, and action-specific policy.",
+    "python_api": "from agent_trust.bundle_boundaries import gate_runtime_pre_action_with_signals"
+  },
+  "agent_trust_skill_one_hop_install_packet": {
+    "boundary": {
+      "no_install_or_shell_execution": true,
+      "no_network_calls": true,
+      "no_outreach_or_posting": true,
+      "no_payment_or_real_money": true,
+      "no_secret_reads": true,
+      "no_wallet_or_signing": true,
+      "review_only": true
+    },
+    "expected_acceptance_signals": [
+      "installability self-check emits ok=true",
+      "installability self-check emits decision=agent_trust_skill_installability_ready",
+      "minimal install_skill check emits decision=deny_or_require_review or require_review for secret/network-capable external skill",
+      "secret_access_authorized=false",
+      "asbom.provenance_evidence_not_trust=true",
+      "review-only boundary preserved"
+    ],
+    "installability_self_check_command": "python3 examples/agent_trust_skill_installability_check.py",
+    "landing_doc": "docs/AGENT_TRUST_SKILL.md",
+    "machine_readable_manifest": "examples/agent_trust_skill_manifest.json",
+    "minimal_install_skill_check_command": "python3 examples/agent_trust_skill.py check --action install_skill --source github --url https://github.com/example/pr-review-helper --requested-permission repo_read,read_env,network --warrant \"summarize current PR only\" --boundary \"no secrets, no external upload, no credential access\"",
+    "purpose": "One-hop install/use/verify packet for Codex, Claude, OpenClaw, Hermes, and similar agents before using Agent Trust Skill.",
+    "skill_entrypoint": "examples/agent_trust_skill.py"
+  },
+  "agent_trust_zero_trust_identity_policy_capability": {
+    "boundary": {
+      "no_execution": true,
+      "no_network_calls": true,
+      "no_outreach_or_posting": true,
+      "no_payment_or_real_money": true,
+      "no_secret_reads": true,
+      "no_wallet_or_signing": true,
+      "review_only": true
+    },
+    "demo_command": "python3 examples/agent_trust_zero_trust_gate.py --demo",
+    "entrypoint": "examples/agent_trust_zero_trust_gate.py",
+    "output": "JSON packet with pre_action_decision=proceed/review/deny, missing_scopes, reasons, controls, and audit_receipt.receipt_digest.",
+    "purpose": "Local pre-action decision receipt for agent identity, least-privilege grants/scopes, action sensitivity, provenance, and scanner evidence.",
+    "python_api": "from agent_trust.bundle_boundaries import gate_zero_trust_agent_action"
+  },
+  "canonical_entrypoint": {
+    "path": "AGENTS.md",
+    "reason": "Root-level agent-facing instructions are the first file many agent harnesses inspect. It points to this packet, the human-readable guide, and local proof commands."
+  },
+  "capabilities": [
+    {
+      "hard_stops": [
+        "no fetch",
+        "no install",
+        "no execution",
+        "no secret values",
+        "no wallet/signing/payment",
+        "no posting/outreach",
+        "no repository settings changes"
+      ],
+      "id": "external_skill_descriptor_pre_action_gate",
+      "output_shape": [
+        "pre_action_decision",
+        "allowed_next_step",
+        "refused_actions",
+        "boundary_intake"
+      ],
+      "run": "python3 examples/agent_trust_external_skill_gate.py --demo --compact",
+      "what_it_does": "Turns an external skill/MCP/plugin/repo descriptor into a local pre-action review packet before any use."
+    },
+    {
+      "command": "python3 examples/agent_trust_external_skill_gate.py --demo --compact",
+      "input": "External skill/MCP/plugin/repo descriptor JSON or --demo synthetic descriptor.",
+      "name": "external_skill_gate",
+      "output": "Local review packet with pre_action_decision, refused_actions, and boundary evidence.",
+      "safety_boundary": "No network, no execution, no secret reads, no install, no outreach, no wallet/payment/real-money action."
+    },
+    {
+      "command": "python3 examples/agent_trust_runtime_signal_gate.py --demo --compact",
+      "input": "Runtime action request with agent identity, requested action, required/granted scopes, artifact/tool identity, provenance, and optional scanner/registry signals.",
+      "name": "runtime_signal_gate",
+      "output": "Local pre-action packet distinguishing static scan evidence from runtime authorization, with proceed/review/deny decision and audit receipt.",
+      "safety_boundary": "No network, no execution, no secret reads, no install, no outreach, no wallet/payment/real-money action."
+    }
+  ],
+  "first_reviewer_client_ask": {
+    "ask_packet": "docs/AGENT_TRUST_FIRST_REVIEWER_CLIENT_ASK.md",
+    "boundary": {
+      "local_only": true,
+      "no_network_calls": true,
+      "no_outreach_or_posting": true,
+      "no_payment_or_real_money": true,
+      "no_repository_settings_changes": true,
+      "no_secret_reads_or_disclosure": true,
+      "no_wallet_or_signing": true,
+      "unsent": true
+    },
+    "decision_packet": "docs/AGENT_TRUST_FIRST_PILOT_REVIEW_PACKET.md",
+    "expected_proof_signals": [
+      "exit_code=0",
+      "ok=true",
+      "decision=proceed_to_first_reviewer_decision_packet",
+      "expected_reviewer_decision=review_accept"
+    ],
+    "purpose": "Shortest local unsent first-reviewer/client ask surface after the one-hop landing packet and proof path are understood.",
+    "required_proof_command": "python3 examples/agent_trust_reviewer_decision_dry_run.py",
+    "reviewer_decision_shape": "accept_for_first_review | needs_changes | reject"
+  },
+  "hard_stops": [
+    "no third-party network calls while evaluating this packet",
+    "no wallets, signing, payments, facilitators, KYC, or real money",
+    "no secret access or secret disclosure",
+    "no outreach, posting, DMs, account creation, or hosted-public claims",
+    "no installing or executing untrusted third-party code"
+  ],
+  "human_readable_guide": {
+    "path": "docs/AGENT_TRUST_FOR_AGENTS.md",
+    "reason": "Compact explanation of Agent Trust, minimal proof flow, integration choices, decision rule, boundaries, and feedback shape."
+  },
+  "integration_decision": {
+    "abstain_when": [
+      "hosted service behavior, production SLA, legal/compliance guarantee, real wallet/payment execution, or scanner/feed execution is required now",
+      "evaluation would require secrets, private prompts, raw exploit payloads, customer data, untrusted code execution, or third-party network calls",
+      "the emitted bundle lacks a field required for the agent's pre-action decision"
+    ],
+    "integrate_experimentally_when": [
+      "the human guide and machine-readable surfaces are readable without implementation source",
+      "minimum local proof commands complete or their failure is understood and acceptable for the local environment",
+      "Agent Trust can sit before a risky action without receiving secrets, wallet authority, posting authority, or external execution rights"
+    ]
+  },
+  "machine_readable_surfaces": [
+    {
+      "kind": "agent_landing_packet",
+      "path": "examples/agent_trust_agent_landing.json",
+      "use": "Start here when a machine-readable one-hop map is preferred."
+    },
+    {
+      "kind": "manifest",
+      "path": "examples/agent_trust_manifest.json",
+      "use": "Full artifact, docs, schema, entrypoint, safety-boundary, and success-signal map."
+    },
+    {
+      "kind": "review_packet",
+      "path": "examples/agent_trust_review_packet.json",
+      "use": "Machine-readable proof commands, review questions, stop conditions, and success signals."
+    },
+    {
+      "kind": "agent_trust_skill_manifest",
+      "path": "examples/agent_trust_skill_manifest.json",
+      "use": "One-hop install/use/verify contract for Agent Trust Skill, including installability self-check and minimal install_skill pre-action check."
+    }
+  ],
+  "minimum_local_proof_commands": [
+    {
+      "cmd": "python3 examples/agent_trust_consumer_decision.py",
+      "expected_signal": "integrate_experimentally or abstain with a first_blocker"
+    },
+    {
+      "cmd": "python3 examples/agent_trust_doctor.py",
+      "expected_signal": "no failed local consistency checks"
+    },
+    {
+      "cmd": "python3 examples/agent_trust_reviewer_decision_dry_run.py",
+      "expected_signal": "ok=true and decision=proceed_to_first_reviewer_decision_packet before using docs/AGENT_TRUST_FIRST_REVIEWER_CLIENT_ASK.md"
+    }
+  ],
+  "optional_full_proof_command": {
+    "cmd": "bash scripts/agent_trust_first_run.sh",
+    "expected_signal": "canonical request, CLI output, golden-output verifier, and examples doctor agree locally"
+  },
+  "purpose": "Canonical self-readable landing packet for AI agents discovering Agent Trust from this repository.",
+  "schema_version": "agent-trust-agent-landing-v1",
+  "structured_feedback_shape": {
+    "agent_trust_decision": "integrate_experimentally | abstain",
+    "commands_run": [],
+    "first_blocker": null,
+    "intended_integration_context": "where Agent Trust would sit before a risky action",
+    "missing_before_adoption": []
+  }
+}

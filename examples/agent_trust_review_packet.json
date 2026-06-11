@@ -1,0 +1,198 @@
+{
+  "canonical_artifacts": [
+    {
+      "name": "manifest",
+      "path": "examples/agent_trust_manifest.json",
+      "why_it_matters": "Discovers all examples, commands, schemas, docs, and success signals from one JSON file."
+    },
+    {
+      "name": "checksums",
+      "path": "examples/agent_trust_checksums.json",
+      "why_it_matters": "Verifies byte-level integrity for canonical checked-in Agent Trust artifacts."
+    },
+    {
+      "name": "doctor",
+      "path": "examples/agent_trust_doctor.py",
+      "why_it_matters": "Runs local consistency checks across fixtures, schemas, manifest, checksums, request wrapper, and verifier."
+    },
+    {
+      "name": "canonical_request",
+      "path": "examples/input.json",
+      "why_it_matters": "Shows the accepted versioned input shape."
+    },
+    {
+      "name": "golden_output",
+      "path": "examples/output.json",
+      "why_it_matters": "Shows deterministic bundle output for the canonical request."
+    },
+    {
+      "name": "schemas",
+      "path": "examples/schemas",
+      "why_it_matters": "Provides request, bundle, and manifest JSON Schemas for mechanical consumers."
+    },
+    {
+      "name": "evidence_transcript",
+      "path": "examples/agent_trust_evidence_transcript.py",
+      "why_it_matters": "One command emits the reviewer-facing local evidence transcript, including doctor, adoption, daily-review, and loopback readiness summaries without external action."
+    },
+    {
+      "name": "reviewer_response_packet",
+      "path": "examples/agent_trust_reviewer_response_packet.py",
+      "why_it_matters": "Turns local reviewer evidence into an explicit accepted/rejected/needs_update response so the next product move is based on a structured reviewer signal, not vague interest."
+    },
+    {
+      "name": "consumer_decision",
+      "path": "examples/agent_trust_consumer_decision.py",
+      "why_it_matters": "Shows how another local agent can combine manifest, review packet, and doctor output into an integrate/abstain decision."
+    },
+    "examples/agent_trust_review_decision_gate.py",
+    {
+      "name": "integration_ticket",
+      "path": "examples/agent_trust_integration_ticket.py",
+      "why_it_matters": "Turns local proof into a reviewer-usable first integration ticket with acceptance criteria, questions, and stop conditions."
+    },
+    {
+      "name": "loopback_readiness",
+      "path": "examples/agent_trust_loopback_readiness.py",
+      "why_it_matters": "Lets a first reviewer or agent reproduce the dedicated 8766-style path locally while preserving no hosted/public availability claim."
+    },
+    {
+      "name": "at_fw_001_reviewer_packet",
+      "path": "docs/AGENT_TRUST_AT_FW_001_REVIEWER_PACKET.md",
+      "why_it_matters": "Turns the filled framework dossier and unsent draft gate into a deterministic integrate/abstain/revise reviewer signal without outreach, network exposure, wallets, signing, payment, secrets, or repository settings changes."
+    },
+    {
+      "name": "first_pilot_review_check",
+      "path": "examples/agent_trust_first_pilot_review_check.py",
+      "why_it_matters": "Gives a first reviewer one local JSON verdict that the reviewer response and provenance decision gate are coherent, review-only, and do not authorize external actions."
+    }
+  ],
+  "contract_version": "agent-trust-bundle-v1",
+  "integration_paths": [
+    {
+      "best_for": "Python agents that want the smallest in-process local call.",
+      "entrypoint": "examples/agent_trust_import.py",
+      "name": "direct_python_import"
+    },
+    {
+      "best_for": "Agents and CI jobs that prefer subprocess boundaries and JSON files.",
+      "entrypoint": "python3 -m agent_trust.cli examples/input.json",
+      "name": "local_cli"
+    },
+    {
+      "best_for": "Local services that already communicate over HTTP/JSON.",
+      "entrypoint": "examples/agent_trust_http_client.py",
+      "name": "local_http_json"
+    },
+    {
+      "best_for": "External consumers validating contracts before running integration code.",
+      "entrypoint": "examples/schemas",
+      "name": "schema_and_golden_output"
+    }
+  ],
+  "local_proof_commands": [
+    {
+      "command": "bash scripts/agent_trust_first_run.sh",
+      "expected_signal": "Final doctor JSON reports ok=true and ready_for_local_integration=true."
+    },
+    {
+      "command": "python3 examples/agent_trust_doctor.py",
+      "expected_signal": "checks_failed is 0, validation_summary names manifest/checksums/schemas/request/golden output, and review_readiness names local evidence plus what is not proven."
+    },
+    {
+      "command": "python3 examples/agent_trust_evidence_transcript.py",
+      "expected_signal": "ok=true, artifact is agent_trust_reviewer_evidence_transcript, evidence includes doctor/adoption_readiness/daily_review/loopback_readiness, and next_smallest_safe_step keeps outreach/hosted/wallet/signing/payment/real-money actions stopped."
+    },
+    {
+      "command": "python3 examples/agent_trust_verify.py",
+      "expected_signal": "ok=true and matches_golden=true for the deterministic CLI bundle output."
+    },
+    {
+      "command": "python3 -m agent_trust.cli --print-contract",
+      "expected_signal": "Contract metadata reports supported contract version and the no-network/no-wallet/no-execution/no-real-money boundary."
+    },
+    {
+      "command": "python3 examples/agent_trust_consumer_decision.py",
+      "expected_signal": "decision is integrate_experimentally when manifest, review packet, safety boundary, and doctor checks are coherent."
+    },
+    {
+      "command": "python3 examples/agent_trust_daily_review.py",
+      "proves": "Daily Agent Trust security-and-progress checkpoint passes local release-state, doctor, and Base Sepolia dry-run boundary checks."
+    },
+    {
+      "command": "python3 examples/agent_trust_review_decision_gate.py",
+      "proves": "Local transcript evidence is coherent enough for human/agent review only, while outreach, live Base Sepolia calls, wallets, signing, payments, and real money remain unauthorized."
+    },
+    {
+      "command": "python3 examples/agent_trust_scanner_evidence.py",
+      "description": "Review sanitized scanner evidence ingestion and deny/review mapping without executing scanners."
+    },
+    {
+      "command": "python3 examples/agent_trust_agent_security_evidence.py",
+      "description": "Review sanitized agent-security evidence ingestion and task-warrant review/deny mapping without external action."
+    },
+    {
+      "command": "python3 examples/agent_trust_integration_ticket.py",
+      "expected_signal": "ok=true, status=ready_for_local_review_only, and no outreach/network/wallet/signing/payment/real-money flags are enabled."
+    },
+    {
+      "command": "python3 examples/agent_trust_loopback_readiness.py",
+      "expected_signal": "decision is loopback_ready_for_controlled_edge_prep; the dedicated Agent Trust MVP runs only on 127.0.0.1, allowlisted discovery/contract/bundle paths return 200, forbidden control-console paths return 404, and no hosted availability, port opening, wallet, signing, payment, real-money, or outreach action occurs."
+    },
+    {
+      "command": "python3 examples/agent_trust_reviewer_response_packet.py",
+      "expected_signal": "ok=true, response_packet_valid=true, reviewer_response.decision is accepted/rejected/needs_update, and authorized_next_step remains local-only while posting/outreach/account/wallet/signing/network/payment/real-money actions stay unauthorized."
+    },
+    {
+      "command": "python3 examples/agent_trust_first_pilot_review_check.py",
+      "expected_signal": "ok=true, decision=first_pilot_review_path_ready, provenance classification is provenance_evidence_not_trust, and tool/MCP/API/wallet/signing/payment/outreach remain unauthorized."
+    }
+  ],
+  "name": "Agent Trust external review packet",
+  "purpose": "Machine-readable review surface for agents or developers evaluating whether the local Agent Trust examples packet is safe, coherent, and worth integrating experimentally.",
+  "review_questions": [
+    "Can your agent find the request, output, schema, verifier, doctor, and safety boundary without reading source code?",
+    "Can your agent run the evidence transcript as the single reviewer-facing local proof packet before deciding whether to inspect the lower-level doctor, adoption, daily-review, or loopback outputs?",
+    "Does the bundle contain enough evidence fields for your agent to decide whether to pay for or use a tool/API before acting?",
+    "Which integration path would you choose first: direct import, CLI, local HTTP, or schema/golden-output validation?",
+    "What missing field would make this trustworthy enough for a real pre-action gate later?",
+    "Does intended_integration_context match a real pre-action gate in your agent loop, framework, or tool runner?",
+    "Does the review decision gate draw the right boundary between local review readiness and actions that still require separate authorization?",
+    "Can your agent provide a sanitized scanner finding summary, without raw payloads or secrets, that Agent Trust can map to proceed/review/deny before a risky action?",
+    "Can your agent turn the integration ticket into a concrete first adapter or field request without needing hosted service behavior, credentials, wallet access, or outreach?",
+    "Can your agent provide a sanitized memory/planning/tool/MCP/payment/contact risk summary with task-warrant fields that Agent Trust can map to proceed/review/deny before action?",
+    "Can your agent run the loopback readiness proof and correctly keep it framed as local-only evidence rather than hosted availability?",
+    "Can your agent or reviewer return a structured accepted/rejected/needs_update response packet after inspecting the local proof, so the next Agent Trust product move is based on actionable signal rather than vague interest?",
+    "Can a framework/tooling reviewer use the at-fw-001 reviewer packet to return integrate, abstain, or revise without external action or secret/wallet/payment behavior?",
+    "Can your agent run the first-pilot review check and verify review-only readiness plus provenance_evidence_not_trust without manually diffing multiple outputs?"
+  ],
+  "safety_boundary": {
+    "execution": false,
+    "network_calls": false,
+    "notes": "Review commands are local checkout commands. They inspect files, run local Python contract entrypoints, and never contact external services, wallets, facilitators, or tool endpoints.",
+    "real_money": false,
+    "wallet_access": false
+  },
+  "stop_conditions": [
+    "Do not publish or announce externally without explicit human confirmation.",
+    "Do not connect wallets, private keys, facilitators, paid endpoints, or real-money flows from this packet.",
+    "Do not treat a local mock approval as permission to spend money.",
+    "Stop and ask for review if a reviewer requests hosted service behavior, account setup, credential handling, or legal/compliance commitments."
+  ],
+  "success_signals": [
+    "Reviewer can run the evidence transcript as one local proof packet and see doctor, adoption, daily-review, and loopback readiness summarized without hosted availability, wallet, signing, payment, real-money, or outreach action.",
+    "Reviewer can run one local command and report ok=true without reading implementation source.",
+    "Reviewer can name the first integration path they would try and one missing evidence field.",
+    "Another agent can use manifest + review packet + schemas to decide whether the local contract is worth experimental integration.",
+    "Another agent can run the consumer decision example and get integrate_experimentally without reading implementation source.",
+    "Doctor output explicitly separates local proof from non-proven hosted, wallet, real-money, legal/compliance, and demand signals.",
+    "Reviewer can point to intended_integration_context as the place where Agent Trust would sit before a risky tool/API/payment-like action.",
+    "Reviewer can run the review decision gate and see ready_for_human_or_agent_review_only without any outreach, wallet, signing, live testnet, payment, or real-money action.",
+    "Reviewer can run the integration ticket and name the smallest acceptable first adapter or missing evidence field while keeping all external actions unauthorized.",
+    "Reviewer can run the agent-security evidence packet and see memory/context, authorization-control, orchestration, and task-warrant risks mapped to review/deny without external action.",
+    "Reviewer can run the loopback readiness proof and distinguish local 127.0.0.1:8766 readiness from any non-proven hosted/public availability claim.",
+    "Reviewer can run the reviewer response packet and return an accepted/rejected/needs_update signal with explicit evidence fields, rubric results, next-product-move recommendation, and hard stops before outreach, posting, accounts, wallets, signing, network calls, payments, or real money.",
+    "Reviewer can inspect the at-fw-001 reviewer packet and return a deterministic integrate/abstain/revise signal while all outreach, posting, network exposure, wallet, signing, payment, real-money, secrets, and repository-settings actions remain stopped.",
+    "Reviewer can run the first-pilot review check and get a single first_pilot_review_path_ready verdict while all tool/MCP/API/wallet/signing/payment/outreach actions remain unauthorized."
+  ]
+}

@@ -4,9 +4,74 @@
   "additionalProperties": false,
   "description": "Deterministic local trust bundle emitted by the Agent Trust Bundle CLI and HTTP surfaces.",
   "properties": {
+    "account_recovery_takeover_detector": {
+      "additionalProperties": true,
+      "description": "Local advisory detector for account-recovery/support flows that try to mutate email, password, MFA, or ownership state from chat-provided target/code evidence. Evidence only; not authorization proof or certification.",
+      "properties": {
+        "active": {
+          "type": "boolean"
+        },
+        "attestation_version": {
+          "const": "account-recovery-takeover-detector-v1"
+        },
+        "execution": {
+          "const": false,
+          "type": "boolean"
+        },
+        "matched_signal_classes": {
+          "type": "object"
+        },
+        "network_calls": {
+          "const": false,
+          "type": "boolean"
+        },
+        "recommendation": {
+          "type": "string"
+        },
+        "risk": {
+          "type": "string"
+        },
+        "severity": {
+          "enum": [
+            "LOW",
+            "HIGH"
+          ],
+          "type": "string"
+        },
+        "signals": {
+          "type": "object"
+        },
+        "wallet_access": {
+          "const": false,
+          "type": "boolean"
+        },
+        "warning": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "attestation_version",
+        "active",
+        "severity",
+        "risk",
+        "signals",
+        "matched_signal_classes",
+        "recommendation",
+        "network_calls",
+        "execution",
+        "wallet_access",
+        "warning"
+      ],
+      "type": "object"
+    },
     "bundle_id": {
       "pattern": "^agenttrust-[0-9a-f]{16}$",
       "type": "string"
+    },
+    "context_control_plane_detector": {
+      "additionalProperties": true,
+      "description": "Local advisory detector for ASAMM-style context-as-control-plane risk: untrusted issue/README/web/tool/MCP text that mixes instruction override, tool/action directives, secret exfiltration, or account-change pressure before external action. Evidence only; not authorization proof or certification.",
+      "type": "object"
     },
     "contract_version": {
       "const": "agent-trust-bundle-v1",
@@ -314,6 +379,8 @@
     "tool_risk",
     "intended_integration_context",
     "provenance_evidence",
+    "account_recovery_takeover_detector",
+    "context_control_plane_detector",
     "digest"
   ],
   "title": "Agent Trust Bundle output v1",
